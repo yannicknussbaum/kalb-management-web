@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kälber Management – die Stalltafel, die mitrechnet</title>
-<meta name="description" content="Kälber Management begleitet die Kälberaufzucht: Milch- und Kraftfutter-Rundgang mit Empfehlung je Kalb, „Heute beobachten“, automatische To-dos mit Erinnerung, Kalender und Bilanz. Läuft auf deinem Hof.">
-<meta property="og:title" content="Kälber Management – die Stalltafel, die mitrechnet">
-<meta property="og:description" content="Rundgang mit Empfehlung je Kalb, „Heute beobachten“, To-dos mit Erinnerung und Bilanz. Läuft auf deinem Hof, die Daten bleiben bei dir.">
+<title>Kälber Management – die App für deine Kälber</title>
+<meta name="description" content="Die App für deine Kälber: richtige Milchmenge je Kalb, sofort sehen, wer schlecht trinkt, Erinnerung an Absetzen und Umstallen. Am Handy im Stall, läuft auf deinem Hof.">
+<meta property="og:title" content="Kälber Management – die App für deine Kälber">
+<meta property="og:description" content="Füttern, aufpassen, nichts vergessen. Am Handy, direkt im Stall.">
 <meta property="og:type" content="website">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#1f4d24" media="(prefers-color-scheme: light)">
@@ -217,7 +217,6 @@
   @media (max-width: 359px) and (max-height: 700px) { .tafel-tipp { display: none; } }
   @media (min-width: 900px) {
     .held-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 64px; padding-top: 40px; }
-    .held-text { order: -1; }
     .rahmen, .ablage, .stift { transform: rotate(1.2deg); }
     .tafel { padding: 22px 28px 30px; }
     .tafel-titel { font-size: 1.85rem; }
@@ -235,10 +234,6 @@
     text-wrap: balance;
   }
   .zeile .text > p { margin-top: 18px; max-width: 36em; color: var(--tinte-2); font-size: 1.0625em; text-wrap: pretty; }
-  .fakten { list-style: none; margin: 26px 0 0; padding: 0; max-width: 36em; }
-  .fakten li { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--linie); color: var(--tinte); }
-  .fakten li:last-child { border-bottom: 1px solid var(--linie); }
-  .fakten .ico { color: var(--gruen); margin-top: .28em; }
   @media (min-width: 900px) {
     .zeile-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
     .zeile:nth-of-type(odd) .beleg { order: -1; }
@@ -299,7 +294,6 @@
   .rg-knoepfe { display: flex; gap: 8px; margin-top: 14px; }
   .rg-knoepfe span { flex: 1; min-height: 50px; display: grid; place-items: center; border-radius: 10px; font-weight: 600; font-size: 14.5px; border: 1px solid rgba(61, 158, 61, .3); color: #2e7b2e; background: #fff; }
   .rg-knoepfe span + span { flex: 2; background: #2e7b2e; border-color: #2e7b2e; color: #fff; }
-  .rg-halten { display: block; text-align: right; margin-top: 6px; }
 
   .ab-titel { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; padding-bottom: 6px; }
   .ab-titel .ico { color: #3d9e3d; }
@@ -326,22 +320,33 @@
   .push-kopf b { font-size: 14.5px; }
   .push p { margin-top: 1px; font-size: 14.5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   .push p b { display: block; }
-  .kal-titel { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
-  .kal-titel .ico { color: #3d9e3d; }
-  .kal-tag { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; padding: 12px 0 2px; }
-  .kal-tag > span { display: grid; place-items: center; height: 52px; border-radius: 12px; background: #e8f5e8; font-weight: 700; font-size: 13px; line-height: 1.1; text-align: center; color: #2e7b2e; }
-  .kal-tag b { display: block; font-size: 14.5px; }
 
-  .bz-titel { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
-  .bz-titel b { font-size: 18px; letter-spacing: -.01em; }
-  .bz-zeile { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(61, 158, 61, .1); font-size: 14.5px; }
-  .bz-zeile b { font-size: 15.5px; }
-  .bz-zeile small { display: block; }
-  .beispiel { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #fbf2df; color: #7a4c0a; font-size: 11.5px; font-weight: 700; letter-spacing: .02em; }
 
-  .ex-text { margin-top: 8px; font-size: 14px; color: #3f5c3f; }
-  .ex-text code { font: 600 13px ui-monospace, "SF Mono", Menlo, monospace; }
-  .ex-knopf { margin-top: 14px; min-height: 48px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(61, 158, 61, .3); color: #2e7b2e; font-weight: 600; font-size: 14.5px; }
+
+  /* ---------- Brauche ich das? ---------- */
+  .zeile .text > .ja-wenn { margin-top: 12px; font: clamp(1.75rem, 1.5rem + 1vw, 2.25rem)/1.2 var(--hand); color: var(--gruen-text); }
+  #brauche .zeile-raster { gap: 24px; }
+  .ja { list-style: none; margin: 0; padding: 0; display: grid; gap: 18px; max-width: 34em; }
+  .ja li { display: flex; align-items: flex-start; gap: 14px; font-size: clamp(1.1875rem, 1.05rem + .6vw, 1.5rem); line-height: 1.3; font-weight: 600; text-wrap: pretty; }
+  .ja .ico { width: 30px; height: 30px; padding: 6px; border-radius: 50%; background: var(--gruen); color: #fff; stroke-width: 3.2; }
+
+  /* ---------- Was kommt auf mich zu? (die Reihenfolge ist die Information) ---------- */
+  .schritte { list-style: none; counter-reset: schritt; margin: 36px 0 0; padding: 0; display: grid; gap: 28px; }
+  .schritte li { counter-increment: schritt; display: grid; grid-template-columns: 52px minmax(0, 1fr); gap: 16px; align-items: start; align-content: start; }
+  .schritte li::before {
+    content: counter(schritt);
+    width: 52px; height: 52px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--gruen-text); color: var(--grund);
+    font-weight: 700; font-size: 1.375rem; font-variant-numeric: tabular-nums;
+  }
+  .schritte h3 { font-size: clamp(1.25rem, 1.1rem + .5vw, 1.5rem); line-height: 1.2; letter-spacing: -.015em; margin-top: 11px; }
+  .schritte p { margin-top: 6px; color: var(--tinte-2); max-width: 26em; text-wrap: pretty; }
+  @media (min-width: 900px) {
+    .schritte { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; }
+    .schritte li { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+    .schritte h3 { margin-top: 4px; }
+  }
 
   /* ---------- Kontakt ---------- */
   .kontakt {
@@ -401,8 +406,6 @@
     <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
     <symbol id="i-health" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
     <symbol id="i-bottle" viewBox="0 0 24 24"><path d="M9 2h6"/><path d="M10 2v3.5L8 9v10a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V9l-2-3.5V2"/><line x1="10" y1="13" x2="14" y2="13"/></symbol>
-    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
-    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
     <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></symbol>
@@ -419,50 +422,43 @@
     </div>
 
     <div class="held-raster">
+      <div class="held-text">
+        <h1>Die App für deine Kälber.</h1>
+        <p class="lead">Füttern, aufpassen, nichts vergessen. Am Handy, direkt im Stall.</p>
+        <div class="held-aktion">
+          <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
+          <small>Läuft auf deinem Hof.</small>
+        </div>
+      </div>
+
       <div class="tafel-ort">
         <div class="tafel-halter">
         <nav class="rahmen" aria-label="Stalltafel – jede Zeile führt zu ihrer Stelle in der App">
           <div class="tafel">
             <p class="tafel-titel" style="--i:0"><span>Kälberstall</span><small>Donnerstag</small></p>
             <ul>
-              <li><a class="tz" href="#rundgang" style="--i:1;--r:-.6deg"><b>Box 3</b><span>0815 Lotte · 6 → 7&nbsp;L</span></a></li>
-              <li><a class="tz rot" href="#beobachten" style="--i:2;--r:.5deg"><b>Box 4</b><span class="kreis">1123 trinkt schlecht!!</span></a></li>
+              <li><a class="tz" href="#fuettern" style="--i:1;--r:-.6deg"><b>Box 3</b><span>0815 Lotte · 6 → 7&nbsp;L</span></a></li>
+              <li><a class="tz rot" href="#aufpassen" style="--i:2;--r:.5deg"><b>Box 4</b><span class="kreis">1123 trinkt schlecht!!</span></a></li>
               <li><span class="tz" style="--i:3;--r:-.3deg"><b>Box 7</b><del>0977 Elektrolyt</del></span></li>
-              <li><a class="tz blau" href="#erinnern" style="--i:4;--r:.4deg"><b>heute</b><span>2342 + 2350 zusammen</span></a></li>
-              <li><a class="tz blau" href="#erinnern" style="--i:5;--r:-.5deg"><b>Fr.</b><span>0612 absetzen?</span></a></li>
-              <li><a class="tz gruen" href="#bilanz" style="--i:6;--r:.3deg"><b>MAT</b><span>12&nbsp;kg – was kostet das?</span></a></li>
+              <li><a class="tz blau" href="#erinnern" style="--i:4;--r:.4deg"><b>Fr.</b><span>0612 absetzen?</span></a></li>
             </ul>
           </div>
         </nav>
         <div class="ablage" aria-hidden="true"></div>
         <div class="stift" aria-hidden="true"></div>
         </div>
-        <p class="tafel-tipp"><svg class="ico" aria-hidden="true"><use href="#i-hand"/></svg>Tipp auf eine Zeile: so steht sie in der App.</p>
-      </div>
-
-      <div class="held-text">
-        <h1>Die Stalltafel, die mitrechnet.</h1>
-        <p class="lead">Kälber Management übernimmt, was heute an der Tafel steht, und rechnet für jedes Kalb weiter: wie viel es bekommt, ob es schlechter trinkt, was als Nächstes ansteht.</p>
-        <div class="held-aktion">
-          <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
-          <small>Läuft auf deinem Hof. Die Daten bleiben bei dir.</small>
-        </div>
+        <p class="tafel-tipp"><svg class="ico" aria-hidden="true"><use href="#i-hand"/></svg>Tipp auf eine Zeile: so sieht sie in der App aus.</p>
       </div>
     </div>
   </div>
 </header>
 
 <main>
-  <section class="zeile" id="rundgang" aria-labelledby="h-rundgang">
+  <section class="zeile" id="fuettern" aria-labelledby="h-fuettern">
     <div class="huelle zeile-raster">
       <div class="text">
-        <h2 id="h-rundgang">Der Rundgang sagt dir die Menge.</h2>
-        <p>Box für Box, in deiner Reihenfolge, für Milch und Kraftfutter. Die Empfehlung folgt der Tränkekurve und dem, was das Kalb zuletzt wirklich getrunken hat.</p>
-        <ul class="fakten">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Höchstens ein Liter mehr als am Vortag</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Eine Gruppentränke zählt als eine Einheit</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>„Weiter“ drei Sekunden halten: alle übrigen Kälber bekommen ihre Empfehlung</li>
-        </ul>
+        <h2 id="h-fuettern">Für jedes Kalb die richtige Menge.</h2>
+        <p>Beim Rundgang siehst du Box für Box, wie viel Milch es gibt: nach Alter und nach dem, was das Kalb zuletzt getrunken hat.</p>
       </div>
       <div class="beleg">
         <p class="notiz">0815 Lotte · 6 → 7&nbsp;L</p>
@@ -479,22 +475,17 @@
             <div class="rg-feld"><small>Gegeben (L)</small><div>3,5</div></div>
             <small class="rg-vorher">Vorherige Mahlzeit getrunken: 3,0&nbsp;L</small>
             <div class="rg-knoepfe"><span>← Zurück</span><span>Speichern &amp; Weiter →</span></div>
-            <small class="rg-halten">3 Sek. halten: alle restlichen Kälber mit Empfehlung</small>
           </div>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="zeile" id="beobachten" aria-labelledby="h-beobachten">
+  <section class="zeile" id="aufpassen" aria-labelledby="h-aufpassen">
     <div class="huelle zeile-raster">
       <div class="text">
-        <h2 id="h-beobachten">Wer schlechter trinkt, steht morgens oben.</h2>
-        <p>Die Übersicht zeigt nur den heutigen Tag. Unter „Heute beobachten“ stehen Kälber mit Trinkrückgang, Kälber, die über Tage weniger trinken als Gleichaltrige, und Kälber in Behandlung.</p>
-        <ul class="fakten">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Jedes Kalb gegen seine letzte Mahlzeit und gegen Gleichaltrige auf derselben Tränkekurve</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Behandlungspläne mit allen Gaben, bis drei Tage nach der letzten im Blick</li>
-        </ul>
+        <h2 id="h-aufpassen">Trinkt ein Kalb schlecht, siehst du es sofort.</h2>
+        <p>Morgens stehen ganz oben die Kälber, die weniger trinken oder krank sind.</p>
       </div>
       <div class="beleg">
         <p class="notiz rot">1123 trinkt schlecht!!</p>
@@ -504,7 +495,7 @@
           <div class="app-karte">
             <div class="ab-titel"><svg class="ico"><use href="#i-health"/></svg>Heute beobachten</div>
             <div class="ab-kalb"><i></i><div><b>1123 · Box 4</b><div class="ab-grund"><svg class="ico"><use href="#i-bottle"/></svg><span>35&nbsp;% weniger getrunken (2,6 statt 4,0&nbsp;L) <em>· 05.11.</em></span></div></div></div>
-            <div class="ab-kalb"><i class="paar"></i><div><b>2350 · Box 9</b><div class="ab-grund"><svg class="ico"><use href="#i-bottle"/></svg><span>trinkt seit 3 Tagen weniger als Gleichaltrige (Ø 2,1 statt 2,9&nbsp;L je Mahlzeit)</span></div></div></div>
+            <div class="ab-kalb"><i class="paar"></i><div><b>2350 · Box 9</b><div class="ab-grund"><svg class="ico"><use href="#i-bottle"/></svg><span>trinkt seit 3 Tagen weniger als Gleichaltrige</span></div></div></div>
             <div class="ab-kalb"><i></i><div><b>0977 Fritz · Box 7</b><div class="ab-grund krank"><svg class="ico"><use href="#i-health"/></svg><span>Durchfall — Elektrolyt <em>· 04.11.</em></span></div></div></div>
           </div>
         </figure>
@@ -515,97 +506,60 @@
   <section class="zeile" id="erinnern" aria-labelledby="h-erinnern">
     <div class="huelle zeile-raster">
       <div class="text">
-        <h2 id="h-erinnern">Was ansteht, meldet sich von selbst.</h2>
-        <p>Jeden Morgen legt die App die To-dos des Tages an, nach Alter, Gewicht oder gefressenem Kraftfutter, und schickt sie dir als Mitteilung aufs Handy. Im Kalender siehst du, was in den nächsten Tagen kommt.</p>
-        <ul class="fakten">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Uhrzeit frei wählbar, Standard 6:00 Uhr</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Umstallen mit einem Tipp, auch rückwirkend</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Im Urlaub pausieren die Mitteilungen nur auf deinem Handy, die Vertretung bekommt sie weiter</li>
-        </ul>
+        <h2 id="h-erinnern">Absetzen, umstallen: Die App erinnert dich.</h2>
+        <p>Jeden Morgen kommt aufs Handy, was heute ansteht.</p>
       </div>
       <div class="beleg">
         <p class="notiz blau">Fr. 0612 absetzen?</p>
         <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
-        <figure class="app" role="img" aria-label="App-Ausschnitt: Mitteilung um 6:00 Uhr, 2 offene To-dos, 2342 und 2350 mit anderem Kalb zusammenlegen. Kalender: Freitag, 0612 Kalb absetzen.">
+        <figure class="app app-push" role="img" aria-label="App-Mitteilung um 6:00 Uhr: 2 offene To-dos, 0612 Kalb absetzen, 2342 mit anderem Kalb zusammenlegen.">
           <div class="push">
             <svg><use href="#logo"/></svg>
             <div>
               <div class="push-kopf"><b>Kälber Management</b><small>6:00</small></div>
-              <p><b>2 offene To-dos</b>2342: Mit anderem Kalb zusammenlegen (Paarhaltung), 2350: Mit anderem Kalb zusammenlegen (Paarhaltung)</p>
+              <p><b>2 offene To-dos</b>0612: Kalb absetzen, 2342: Mit anderem Kalb zusammenlegen (Paarhaltung)</p>
             </div>
           </div>
-          <div class="app-karte" style="margin-top:12px">
-            <div class="kal-titel"><svg class="ico"><use href="#i-calendar"/></svg>Kalender</div>
-            <div class="kal-tag"><span>Fr</span><div><b>0612: Kalb absetzen</b><small>Ende der Milchphase erreicht</small></div></div>
-          </div>
         </figure>
       </div>
     </div>
   </section>
 
-  <section class="zeile" id="bilanz" aria-labelledby="h-bilanz">
+  <section class="zeile" id="brauche" aria-labelledby="h-brauche">
     <div class="huelle zeile-raster">
       <div class="text">
-        <h2 id="h-bilanz">Was die Kälber kosten, steht in der Bilanz.</h2>
-        <p>Milch, MAT und Kraftfutter werden zusammengerechnet, jeder Tag mit dem Preis, der damals galt. Den Milchpreis holt die App jeden Monat selbst: Bioland oder ife-Rohstoffwert.</p>
-        <ul class="fakten">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Jahr wählen, darunter einzelne Monate</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Geburten, Abgänge, Tageszunahme, Krankheiten, erledigte To-dos</li>
-        </ul>
+        <h2 id="h-brauche">Brauche ich das?</h2>
+        <p class="ja-wenn">Ja, wenn …</p>
       </div>
-      <div class="beleg">
-        <p class="notiz gruen">MAT 12&nbsp;kg – was kostet das?</p>
-        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
-        <figure class="app" role="img" aria-label="App-Ausschnitt Bilanz Oktober 2026 mit Beispielzahlen: 9 Geburten, Futterkosten 1.284 Euro, durchschnittliche Tageszunahme 0,82 Kilogramm, Milchpreis Bioland 0,66 Euro je Liter.">
-          <div class="app-leiste"><svg><use href="#logo"/></svg>Bilanz<span class="beispiel">Beispielzahlen</span></div>
-          <div class="app-karte">
-            <div class="bz-titel"><b>Oktober 2026</b><small>Monat</small></div>
-            <div class="bz-zeile"><span>Geburten</span><b>9</b></div>
-            <div class="bz-zeile"><span>Futterkosten<small>Milch, MAT, Kraftfutter</small></span><b>1.284&nbsp;€</b></div>
-            <div class="bz-zeile"><span>Ø Tageszunahme</span><b>0,82&nbsp;kg</b></div>
-            <div class="bz-zeile"><span>Milchpreis<small>Bioland, automatisch</small></span><b>0,66&nbsp;€/L</b></div>
-          </div>
-        </figure>
-      </div>
+      <ul class="ja">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du Kälber mit Milch oder MAT tränkst</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du schneller merken willst, wenn eins schlecht trinkt</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>nicht mehr alles im Kopf oder an der Tafel stehen soll</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du wissen willst, was dich das Futter kostet</li>
+      </ul>
     </div>
   </section>
 
-  <section class="zeile" id="hof" aria-labelledby="h-hof">
-    <div class="huelle zeile-raster">
-      <div class="text">
-        <h2 id="h-hof">Läuft auf deinem Hof.<br> Die Daten bleiben dort.</h2>
-        <p>Kälber Management läuft auf einem Raspberry Pi, einem Windows-PC oder in Docker, bei dir und nicht in einer fremden Cloud. Im Stall öffnest du es am Handy im Browser oder als App auf dem Home-Bildschirm, auf Wunsch auch sicher von unterwegs.</p>
-        <ul class="fakten">
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Ein kleiner Rechner im Büro oder Stall reicht</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Eigenes Passwort, verschlüsselte Verbindung</li>
-          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Alle Daten in einer Datei, die Sicherung ist ein Knopfdruck</li>
-        </ul>
-      </div>
-      <div class="beleg">
-        <p class="notiz">Backup → USB-Stick!</p>
-        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
-        <figure class="app" role="img" aria-label="App-Ausschnitt Einstellungen: Datenbank exportieren. Lade die aktuelle Kälber-Datenbank kaelber.db als Backup herunter.">
-          <div class="app-leiste"><svg><use href="#logo"/></svg>Einstellungen<span>Allgemein</span></div>
-          <div class="app-karte">
-            <div class="kal-titel"><svg class="ico"><use href="#i-download"/></svg>Datenbank exportieren</div>
-            <p class="ex-text">Lade die aktuelle Kälber-Datenbank (<code>kaelber.db</code>) als Backup herunter, um deine Daten lokal zu sichern.</p>
-            <div class="ex-knopf">Datenbank exportieren</div>
-          </div>
-        </figure>
-      </div>
+  <section class="zeile" id="ablauf" aria-labelledby="h-ablauf">
+    <div class="huelle">
+      <h2 id="h-ablauf">Was kommt auf mich zu?</h2>
+      <ol class="schritte">
+        <li><div><h3>Du meldest dich.</h3><p>Per Anruf, WhatsApp oder E-Mail.</p></div></li>
+        <li><div><h3>Wir richten alles mit dir ein.</h3><p>Die App läuft auf einem kleinen Rechner bei dir auf dem Hof. Deine Daten bleiben bei dir.</p></div></li>
+        <li><div><h3>Du fütterst mit dem Handy.</h3><p>Im Stall, Box für Box. Ohne Zettel.</p></div></li>
+      </ol>
     </div>
   </section>
 
   <section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
     <div class="huelle kontakt-raster">
       <div>
-        <h2 id="h-kontakt">Lass dir die App zeigen.</h2>
-        <p class="lead">Melde dich bei uns. Wir zeigen dir Kälber Management am Handy und richten es mit dir auf deinem Hof ein.</p>
+        <h2 id="h-kontakt">Interesse? Ruf an oder schreib uns.</h2>
         <p class="absender">Ein Angebot vom Hof Schumacher · <span class="platzhalter">Ansprechpartner</span><br>
-          Vorab stöbern: <a href="anleitung.html">Bedienungsanleitung</a></p>
+          <a href="anleitung.html">Zur Bedienungsanleitung</a></p>
       </div>
       <div class="wege">
-                <a href="tel:+32493458722"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Anrufen<small>+32 493 45 87 22</small></span></a>
+        <a href="tel:+32493458722"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Anrufen<small>+32 493 45 87 22</small></span></a>
         <a href="https://wa.me/32493458722"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp schreiben<small>+32 493 45 87 22</small></span></a>
         <a href="mailto:info@kalb-management.de?subject=K%C3%A4lber%20Management%20%E2%80%93%20Vorf%C3%BChrung"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail schreiben<small>info@kalb-management.de</small></span></a>
         <button type="button" id="vcard" hidden><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Kontakt speichern<small>Für später, direkt ins Adressbuch</small></span></button>
