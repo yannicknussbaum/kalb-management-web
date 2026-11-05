@@ -1,0 +1,1071 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Anleitung zum Kälber-Management-System: App auf Handy oder Computer einrichten und alle Funktionen nachschlagen.">
+<meta name="color-scheme" content="light dark">
+<title>Kälber-Handbuch</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@500;600&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+  :root {
+    --gruen: #3d9e3d;
+    --gruen-tief: #1f4d24;
+    --gruen-hell: #e8f1e4;
+    --bernstein: #c8871a;
+    --bernstein-hell: #fbf2df;
+    --ziegel: #b5392c;
+    --ziegel-hell: #fbeae7;
+
+    --grund: #f6f7f3;
+    --flaeche: #ffffff;
+    --flaeche-2: #eef1ea;
+    --tinte: #1c2118;
+    --tinte-leise: #5e6857;
+    --linie: #dfe4d8;
+    --linie-stark: #c6cfbc;
+
+    --display: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+    --body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+    --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 36px; --s7: 56px;
+    --r: 10px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --gruen: #6cc46c;
+      --gruen-tief: #a8dba5;
+      --gruen-hell: #1e2a1c;
+      --bernstein: #e0a83f;
+      --bernstein-hell: #2a2314;
+      --ziegel: #e2796a;
+      --ziegel-hell: #2c1b18;
+
+      --grund: #14180f;
+      --flaeche: #1c211a;
+      --flaeche-2: #242a21;
+      --tinte: #e6ebe0;
+      --tinte-leise: #9aa593;
+      --linie: #333c2f;
+      --linie-stark: #47533f;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --gruen: #6cc46c;
+    --gruen-tief: #a8dba5;
+    --gruen-hell: #1e2a1c;
+    --bernstein: #e0a83f;
+    --bernstein-hell: #2a2314;
+    --ziegel: #e2796a;
+    --ziegel-hell: #2c1b18;
+
+    --grund: #14180f;
+    --flaeche: #1c211a;
+    --flaeche-2: #242a21;
+    --tinte: #e6ebe0;
+    --tinte-leise: #9aa593;
+    --linie: #333c2f;
+    --linie-stark: #47533f;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--grund);
+    color: var(--tinte);
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ---------- Gerüst ---------- */
+  .huelle {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 var(--s4);
+  }
+
+  .kopf {
+    border-bottom: 2px solid var(--gruen);
+    padding: var(--s6) 0 var(--s5);
+    display: flex;
+    align-items: flex-start;
+    gap: var(--s4);
+    flex-wrap: wrap;
+  }
+  .kopf-marke {
+    width: 52px; height: 52px;
+    flex: 0 0 auto;
+    border-radius: 12px;
+    background: var(--gruen);
+    color: #fff;
+    display: grid; place-items: center;
+  }
+  .kopf-text { flex: 1 1 320px; }
+  .kopf h1 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(30px, 5vw, 44px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 var(--s2);
+    color: var(--gruen-tief);
+    text-wrap: balance;
+  }
+  .kopf p {
+    margin: 0;
+    max-width: 62ch;
+    color: var(--tinte-leise);
+    font-size: 18px;
+  }
+
+  .raster {
+    display: grid;
+    grid-template-columns: 244px minmax(0, 1fr);
+    gap: var(--s7);
+    align-items: start;
+    padding-bottom: var(--s7);
+  }
+
+  /* ---------- Inhaltsverzeichnis ---------- */
+  .toc {
+    position: sticky;
+    top: var(--s4);
+    padding-top: var(--s5);
+  }
+  .toc-titel {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--tinte-leise);
+    margin-bottom: var(--s3);
+  }
+  .toc ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1px; }
+  .toc a {
+    display: block;
+    padding: 6px var(--s3);
+    border-left: 2px solid var(--linie);
+    color: var(--tinte-leise);
+    text-decoration: none;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+  .toc a:hover { color: var(--gruen-tief); border-left-color: var(--gruen); background: var(--gruen-hell); }
+  .toc .toc-gruppe {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--tinte-leise);
+    padding: var(--s4) var(--s3) var(--s1);
+    opacity: 0.75;
+  }
+
+  /* ---------- Suche ---------- */
+  .suche-feld {
+    position: relative;
+    margin-bottom: var(--s4);
+  }
+  .suche-feld input {
+    width: 100%;
+    font-family: var(--body);
+    font-size: 16px;
+    padding: 10px 12px 10px 34px;
+    border: 1px solid var(--linie-stark);
+    border-radius: var(--r);
+    background: var(--flaeche);
+    color: var(--tinte);
+  }
+  .suche-feld input:focus { outline: 2px solid var(--gruen); outline-offset: 1px; border-color: var(--gruen); }
+  .suche-feld svg { position: absolute; left: 11px; top: 12px; color: var(--tinte-leise); }
+  .suche-info {
+    font-size: 14px;
+    color: var(--tinte-leise);
+    margin-bottom: var(--s4);
+  }
+  .suche-info b { color: var(--gruen-tief); }
+
+  /* ---------- Abschnitte ---------- */
+  main { padding-top: var(--s5); min-width: 0; }
+  section { scroll-margin-top: var(--s4); margin-bottom: var(--s7); }
+  section > h2 {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: clamp(23px, 3vw, 30px);
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    color: var(--gruen-tief);
+    margin: 0 0 var(--s2);
+    padding-bottom: var(--s2);
+    border-bottom: 1px solid var(--linie-stark);
+    display: flex;
+    align-items: center;
+    gap: var(--s3);
+    text-wrap: balance;
+  }
+  section > h2 .tab-icon { color: var(--gruen); flex: 0 0 auto; }
+  .abschnitt-vor {
+    color: var(--tinte-leise);
+    margin: 0 0 var(--s5);
+    max-width: 64ch;
+  }
+  h3 {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 19px;
+    letter-spacing: -0.01em;
+    margin: var(--s5) 0 var(--s2);
+    color: var(--tinte);
+  }
+  p { margin: 0 0 var(--s3); max-width: 66ch; }
+  a { color: var(--gruen-tief); }
+
+  /* ---------- Nachschlage-Einträge ---------- */
+  .eintraege { display: flex; flex-direction: column; gap: 1px; background: var(--linie); border: 1px solid var(--linie); border-radius: var(--r); overflow: hidden; }
+  .eintrag { background: var(--flaeche); padding: var(--s4); }
+  .eintrag dt {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 16px;
+    color: var(--tinte);
+    margin-bottom: 2px;
+  }
+  .eintrag dd { margin: 0; color: var(--tinte-leise); font-size: 16px; max-width: 66ch; }
+  .eintrag dd + dd { margin-top: var(--s2); }
+
+  /* ---------- Schrittfolgen ---------- */
+  .schritte { list-style: none; margin: 0; padding: 0; counter-reset: schritt; display: flex; flex-direction: column; }
+  .schritte > li {
+    counter-increment: schritt;
+    position: relative;
+    padding: 0 0 var(--s5) var(--s6);
+    border-left: 1px solid var(--linie-stark);
+    margin-left: 13px;
+  }
+  .schritte > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  .schritte > li::before {
+    content: counter(schritt);
+    position: absolute;
+    left: -13px; top: -2px;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: var(--gruen);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    display: grid; place-items: center;
+  }
+  .schritte strong { font-weight: 600; color: var(--tinte); }
+  .schritte > li > p:last-child { margin-bottom: 0; }
+
+  /* ---------- Plattform-Umschalter ---------- */
+  .plattformen { display: flex; gap: var(--s2); flex-wrap: wrap; margin-bottom: var(--s5); }
+  .plattformen button {
+    font-family: var(--display);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 9px var(--s4);
+    border: 1px solid var(--linie-stark);
+    background: var(--flaeche);
+    color: var(--tinte-leise);
+    border-radius: 999px;
+    cursor: pointer;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .plattformen button:hover { border-color: var(--gruen); color: var(--gruen-tief); }
+  .plattformen button[aria-selected="true"] {
+    background: var(--gruen);
+    border-color: var(--gruen);
+    color: #fff;
+  }
+  .plattformen button:focus-visible { outline: 2px solid var(--gruen); outline-offset: 2px; }
+
+  /* ---------- Hinweise ---------- */
+  .merke {
+    border-left: 3px solid var(--bernstein);
+    background: var(--bernstein-hell);
+    padding: var(--s3) var(--s4);
+    border-radius: 0 var(--r) var(--r) 0;
+    margin: var(--s4) 0;
+    font-size: 16px;
+  }
+  .merke b, .achtung b { font-family: var(--display); font-weight: 600; }
+  .merke p:last-child, .achtung p:last-child { margin-bottom: 0; }
+  .achtung {
+    border-left: 3px solid var(--ziegel);
+    background: var(--ziegel-hell);
+    padding: var(--s3) var(--s4);
+    border-radius: 0 var(--r) var(--r) 0;
+    margin: var(--s4) 0;
+    font-size: 16px;
+  }
+
+  /* ---------- Tipp-Anweisung (was man antippt) ---------- */
+  .tipp {
+    font-family: var(--mono);
+    font-size: 0.86em;
+    font-weight: 500;
+    background: var(--flaeche-2);
+    border: 1px solid var(--linie-stark);
+    border-radius: 5px;
+    padding: 1px 6px;
+    white-space: nowrap;
+    color: var(--tinte);
+  }
+  .pfad { font-family: var(--mono); font-size: 0.86em; color: var(--gruen-tief); font-weight: 500; }
+
+  /* ---------- Replik der App-Navigation ---------- */
+  .navleiste {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    background: var(--flaeche);
+    border: 1px solid var(--linie-stark);
+    border-radius: var(--r);
+    overflow: hidden;
+    margin-bottom: var(--s5);
+  }
+  .navleiste a {
+    padding: var(--s4) var(--s1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    text-decoration: none;
+    color: var(--tinte-leise);
+    border-right: 1px solid var(--linie);
+    font-size: 12px;
+    font-family: var(--display);
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .navleiste a:last-child { border-right: 0; }
+  .navleiste a:hover { background: var(--gruen-hell); color: var(--gruen-tief); }
+  .navleiste a svg { color: var(--gruen); }
+
+  /* ---------- Tabelle ---------- */
+  .tab-huelle { overflow-x: auto; border: 1px solid var(--linie); border-radius: var(--r); margin: var(--s4) 0; }
+  table { border-collapse: collapse; width: 100%; font-size: 16px; background: var(--flaeche); }
+  th, td { text-align: left; padding: 10px var(--s4); border-bottom: 1px solid var(--linie); vertical-align: top; }
+  th {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--tinte-leise);
+    font-weight: 600;
+    background: var(--flaeche-2);
+  }
+  tr:last-child td { border-bottom: 0; }
+  td:first-child { font-weight: 600; white-space: nowrap; }
+
+  .fuss {
+    border-top: 1px solid var(--linie-stark);
+    padding: var(--s5) 0 var(--s6);
+    color: var(--tinte-leise);
+    font-size: 15px;
+  }
+
+  .leer-treffer {
+    background: var(--flaeche);
+    border: 1px dashed var(--linie-stark);
+    border-radius: var(--r);
+    padding: var(--s5);
+    text-align: center;
+    color: var(--tinte-leise);
+  }
+
+  mark { background: var(--bernstein-hell); color: var(--tinte); border-radius: 3px; padding: 0 2px; }
+
+  @media (max-width: 880px) {
+    body { font-size: 16px; }
+    .raster { grid-template-columns: 1fr; gap: var(--s4); }
+    .toc {
+      position: static;
+      padding: var(--s4);
+      background: var(--flaeche);
+      border: 1px solid var(--linie);
+      border-radius: var(--r);
+      margin-top: var(--s4);
+    }
+    .toc ol { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 2px; }
+    .toc .toc-gruppe { grid-column: 1 / -1; padding-top: var(--s3); }
+    .navleiste { grid-template-columns: repeat(3, 1fr); }
+    .navleiste a { border-bottom: 1px solid var(--linie); }
+    main { padding-top: var(--s4); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  /* Reset — in der Artifact-Umgebung kommt der von aussen, hier gehört er dazu. */
+  html { color-scheme: light dark; }
+  body { margin: 0; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="huelle">
+
+  <header class="kopf">
+    <div class="kopf-marke" aria-hidden="true">
+      <svg width="32" height="32" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke-width="27" d="M196 206 C 210 156 302 156 316 206
+                 C 342 182 380 184 404 212
+                 C 386 238 350 242 322 234
+                 C 328 258 326 272 318 288
+                 C 344 296 350 344 322 364
+                 C 300 382 212 382 190 364
+                 C 162 344 168 296 194 288
+                 C 186 272 184 258 190 234
+                 C 162 242 126 238 108 212
+                 C 132 184 170 182 196 206 Z"/>
+        <g fill="currentColor" stroke="none">
+          <path d="M230 172 C 238 144 274 144 282 172 Z"/>
+          <circle cx="223" cy="252" r="16"/>
+          <circle cx="289" cy="252" r="16"/>
+          <ellipse cx="229" cy="337" rx="10" ry="13" transform="rotate(-12 229 337)"/>
+          <ellipse cx="283" cy="337" rx="10" ry="13" transform="rotate(12 283 337)"/>
+        </g>
+      </svg>
+    </div>
+    <div class="kopf-text">
+      <h1>Kälber-Handbuch</h1>
+      <p>App aufs Handy holen und alles nachschlagen, was sie kann. Die Kapitel sind genauso geordnet wie die Leiste unten in der App — was du dort antippst, findest du hier unter demselben Namen.</p>
+    </div>
+  </header>
+
+  <div class="raster">
+
+    <nav class="toc" aria-label="Inhalt">
+      <div class="toc-titel">Inhalt</div>
+      <ol>
+        <li class="toc-gruppe">Loslegen</li>
+        <li><a href="#installation">App aufs Gerät holen</a></li>
+        <li><a href="#anmelden">Erste Anmeldung</a></li>
+        <li><a href="#mitteilungen">Mitteilungen einschalten</a></li>
+        <li><a href="#rundgang">Die App auf einen Blick</a></li>
+
+        <li class="toc-gruppe">Die sechs Reiter</li>
+        <li><a href="#uebersicht">Übersicht</a></li>
+        <li><a href="#kaelber">Kälber</a></li>
+        <li><a href="#milch">Milch</a></li>
+        <li><a href="#kraftfutter">Kraftfutter</a></li>
+        <li><a href="#listen">Listen</a></li>
+        <li><a href="#einstellungen">Einstellungen</a></li>
+
+        <li class="toc-gruppe">Wenn es klemmt</li>
+        <li><a href="#hilfe">Häufige Fragen</a></li>
+        <li><a href="#sichern">Daten sichern</a></li>
+      </ol>
+    </nav>
+
+    <main>
+
+      <div class="suche-feld">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.5" y2="16.5"/></svg>
+        <input type="search" id="suche" placeholder="Suchen — z.B. Restmilch, Abtränken, Passwort" aria-label="Im Handbuch suchen" autocomplete="off">
+      </div>
+      <p class="suche-info" id="suche-info" hidden></p>
+
+      <!-- ============ INSTALLATION ============ -->
+      <section id="installation">
+        <h2>App aufs Gerät holen</h2>
+        <p class="abschnitt-vor">Die App wird nicht aus einem App-Store geladen. Du bekommst einen Link, öffnest ihn im Browser und legst ihn dort als App ab. Danach hat sie ein eigenes Symbol und startet wie jede andere App — ohne Adresszeile, ohne Browser-Rahmen.</p>
+
+        <h3>Das brauchst du vorher</h3>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Den Link</dt>
+            <dd>Sieht ungefähr so aus: <span class="tipp">https://hof-name.tailnet.ts.net</span> — bekommst du vom Betreiber geschickt.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Dein Passwort</dt>
+            <dd>Ohne Passwort kommt niemand rein. Bekommst du ebenfalls vom Betreiber. Wenn du der Erste bist, der die App öffnet, richtest du es selbst ein — siehe <a href="#anmelden">Erste Anmeldung</a>.</dd>
+          </div>
+        </div>
+
+        <h3>Wähle dein Gerät</h3>
+        <div class="plattformen" role="tablist" aria-label="Gerät auswählen">
+          <button role="tab" id="tab-iphone" aria-controls="p-iphone" aria-selected="true" data-ziel="p-iphone">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="3"/><line x1="11" y1="18.5" x2="13" y2="18.5"/></svg>
+            iPhone &amp; iPad
+          </button>
+          <button role="tab" id="tab-android" aria-controls="p-android" aria-selected="false" data-ziel="p-android">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2" width="12" height="20" rx="2"/><line x1="9.5" y1="5" x2="14.5" y2="5"/></svg>
+            Android
+          </button>
+          <button role="tab" id="tab-computer" aria-controls="p-computer" aria-selected="false" data-ziel="p-computer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+            Computer
+          </button>
+        </div>
+
+        <div id="p-iphone" role="tabpanel" aria-labelledby="tab-iphone">
+          <ol class="schritte">
+            <li>
+              <p><strong>Link in Safari öffnen.</strong> Tippe den Link an, den du bekommen hast, oder gib ihn in Safari ein.</p>
+              <div class="achtung"><p><b>Es muss Safari sein.</b> Chrome und Firefox können auf dem iPhone keine App auf den Home-Bildschirm legen. Falls sich der Link in einer anderen App öffnet (WhatsApp, Mail), tippe auf die drei Punkte oder das Teilen-Symbol und wähle <span class="tipp">In Safari öffnen</span>.</p></div>
+            </li>
+            <li>
+              <p><strong>Passwort eingeben und anmelden.</strong> Damit bist du drin — die App läuft jetzt schon, nur eben im Browser.</p>
+            </li>
+            <li>
+              <p><strong>Teilen-Symbol antippen.</strong> Das Quadrat mit dem Pfeil nach oben, unten in der Mitte der Safari-Leiste. Auf dem iPad sitzt es oben rechts.</p>
+            </li>
+            <li>
+              <p><strong>„Zum Home-Bildschirm" wählen.</strong> In der Liste etwas nach unten scrollen. Der Eintrag heißt <span class="tipp">Zum Home-Bildschirm</span>.</p>
+            </li>
+            <li>
+              <p><strong>Namen vergeben und auf „Hinzufügen" tippen.</strong> Der Vorschlag passt meistens. Danach liegt das grüne Kalbskopf-Symbol auf deinem Home-Bildschirm.</p>
+            </li>
+            <li>
+              <p><strong>Ab jetzt immer über dieses Symbol starten.</strong> Nicht mehr über Safari — sonst bekommst du keine Mitteilungen.</p>
+            </li>
+          </ol>
+        </div>
+
+        <div id="p-android" role="tabpanel" aria-labelledby="tab-android" hidden>
+          <ol class="schritte">
+            <li><p><strong>Link in Chrome öffnen</strong> und mit deinem Passwort anmelden.</p></li>
+            <li><p><strong>Auf die drei Punkte oben rechts tippen.</strong></p></li>
+            <li><p><strong>„App installieren" wählen.</strong> Je nach Android-Version heißt der Eintrag auch <span class="tipp">Zum Startbildschirm hinzufügen</span> — beides führt zum selben Ergebnis.</p></li>
+            <li><p><strong>Bestätigen.</strong> Das Symbol landet im App-Menü und meist auch auf dem Startbildschirm.</p></li>
+          </ol>
+          <div class="merke"><p><b>Hinweis:</b> Manchmal blendet Chrome von selbst unten einen Balken „App installieren" ein. Der tut dasselbe — einfach antippen.</p></div>
+        </div>
+
+        <div id="p-computer" role="tabpanel" aria-labelledby="tab-computer" hidden>
+          <ol class="schritte">
+            <li><p><strong>Link in Chrome oder Edge öffnen</strong> und anmelden.</p></li>
+            <li>
+              <p><strong>Nach dem Installations-Symbol in der Adresszeile schauen.</strong> Ein kleiner Bildschirm mit einem Pfeil nach unten, ganz rechts in der Adresszeile. Draufklicken, dann <span class="tipp">Installieren</span>.</p>
+            </li>
+            <li>
+              <p><strong>Kein Symbol da?</strong> Dann über das Menü: drei Punkte oben rechts → <span class="pfad">Übertragen, speichern und teilen</span> → <span class="tipp">Seite als App installieren</span>. In Edge heißt es <span class="pfad">Apps</span> → <span class="tipp">Diese Website als App installieren</span>.</p>
+            </li>
+            <li>
+              <p><strong>Fertig.</strong> Die App öffnet sich in einem eigenen Fenster ohne Adresszeile und liegt danach im Startmenü beziehungsweise im Dock.</p>
+            </li>
+          </ol>
+          <div class="merke"><p><b>Auch ohne Installation nutzbar:</b> Du kannst den Link einfach als Lesezeichen ablegen. Die App funktioniert im normalen Browser-Tab genauso — nur eben mit Adresszeile drumherum.</p></div>
+        </div>
+      </section>
+
+      <!-- ============ ANMELDEN ============ -->
+      <section id="anmelden">
+        <h2>Erste Anmeldung</h2>
+        <p class="abschnitt-vor">Was beim ersten Öffnen passiert, hängt davon ab, ob der Betrieb schon eingerichtet ist.</p>
+
+        <h3>Der Betrieb läuft schon</h3>
+        <p>Du siehst nur ein Feld für das Passwort. Eintragen, <span class="tipp">Anmelden</span>, fertig. Die Anmeldung hält <strong>15 Tage</strong>, danach fragt die App wieder nach dem Passwort. Das ist Absicht: ein weitergegebenes Passwort soll nicht für immer gelten.</p>
+
+        <h3>Du bist der Erste — Ersteinrichtung</h3>
+        <p>Dann führt dich ein Einrichtungsfenster durch drei Dinge. Solange das nicht durch ist, kommt niemand in die App.</p>
+        <ol class="schritte">
+          <li><p><strong>Freischalt-Passwort.</strong> Schützt die frische Instanz davor, dass sich jemand anderes aus dem Netz zuerst einrichtet. Bekommst du vom Entwickler beziehungsweise vom Betreiber.</p></li>
+          <li><p><strong>Login-Passwort festlegen.</strong> Mindestens 8 Zeichen mit Groß- und Kleinbuchstabe und einer Zahl. Das ist ab jetzt <em>das</em> Passwort für alle, die rein sollen.</p></li>
+          <li><p><strong>PIN (freiwillig).</strong> Eine vierstellige PIN, die zusätzlich die Einstellungen sperrt. Sinnvoll, wenn mehrere Leute die App nutzen, aber nicht jeder an den Futterkurven drehen soll. Kannst du auch später noch einrichten oder abschalten.</p></li>
+        </ol>
+
+        <div class="achtung">
+          <p><b>Passwort vergessen?</b> Es gibt keine „Passwort zurücksetzen"-Mail — die App läuft auf dem Hof, nicht in der Cloud. Melde dich beim Betreiber; er kann das Passwort am Server ändern.</p>
+        </div>
+      </section>
+
+      <!-- ============ MITTEILUNGEN ============ -->
+      <section id="mitteilungen">
+        <h2>Mitteilungen einschalten</h2>
+        <p class="abschnitt-vor">Die App kann dich an offene Aufgaben erinnern, auch wenn sie gar nicht geöffnet ist. Standardmäßig ist das aus — du schaltest es einmal ein.</p>
+
+        <ol class="schritte">
+          <li><p><strong>Die App vom Home-Bildschirm aus starten.</strong> Auf dem iPhone ist das Pflicht: aus Safari heraus lässt Apple keine Mitteilungen zu. Erst wenn die App als Symbol auf dem Home-Bildschirm liegt und von dort gestartet wird, funktioniert es.</p></li>
+          <li><p><strong>Zu <span class="pfad">Einstellungen → Push-Benachrichtigungen</span> gehen</strong> und den Schalter umlegen.</p></li>
+          <li><p><strong>Die Rückfrage des Geräts erlauben.</strong> Das Handy fragt einmal nach — hier auf <span class="tipp">Erlauben</span> tippen. Sagst du hier versehentlich nein, musst du es in den Geräte-Einstellungen wieder freigeben.</p></li>
+        </ol>
+
+        <h3>Was dann kommt</h3>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Offene Aufgaben — jeden Morgen</dt>
+            <dd>Standardmäßig um 06:00 Uhr. Zu dieser Zeit legt die App auch die fälligen To-dos neu an. Die Uhrzeit lässt sich in den Einstellungen ändern.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Hitze-Erinnerung</dt>
+            <dd>Ab Mittag, wenn es wärmer wird als die eingestellte Schwelle: Denk ans Wasser der Kälber. Dafür muss ein Standort hinterlegt sein.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Frost-Erinnerung</dt>
+            <dd>Einmal pro Winter, am ersten Tag mit Nachtfrost: Ist alles für die kalte Zeit vorbereitet?</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Jahresbilanz</dt>
+            <dd>Einmal nach dem Jahreswechsel der Hinweis, dass die Bilanz des Vorjahres fertig ist.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Update installiert</dt>
+            <dd>Wenn eine neue Version eingespielt wurde. Beim nächsten Öffnen zeigt dir die App dann kurz, was sich geändert hat — einmal, danach ist es weg.</dd>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ RUNDGANG ============ -->
+      <section id="rundgang">
+        <h2>Die App auf einen Blick</h2>
+        <p class="abschnitt-vor">Unten sitzen sechs Reiter. Mehr gibt es nicht — alles andere hängt darunter. Tippe einen an, um direkt zum passenden Kapitel zu springen.</p>
+
+        <nav class="navleiste" aria-label="Die sechs Reiter der App">
+          <a href="#uebersicht">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            Übersicht
+          </a>
+          <a href="#kaelber">
+            <svg width="21" height="21" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="27" d="M196 206 C 210 156 302 156 316 206 C 342 182 380 184 404 212 C 386 238 350 242 322 234 C 328 258 326 272 318 288 C 344 296 350 344 322 364 C 300 382 212 382 190 364 C 162 344 168 296 194 288 C 186 272 184 258 190 234 C 162 242 126 238 108 212 C 132 184 170 182 196 206 Z"/><g fill="currentColor" stroke="none"><circle cx="223" cy="252" r="16"/><circle cx="289" cy="252" r="16"/></g></svg>
+            Kälber
+          </a>
+          <a href="#listen">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+            Listen
+          </a>
+          <a href="#milch">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v3a5 5 0 0 0-5 5v9a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-9a5 5 0 0 0-5-5V2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+            Milch
+          </a>
+          <a href="#kraftfutter">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4.5" width="8.5" height="4" rx="2" transform="rotate(-18 7.25 6.5)"/><rect x="13" y="7" width="8" height="4" rx="2" transform="rotate(14 17 9)"/><rect x="2.5" y="12" width="8" height="4" rx="2" transform="rotate(10 6.5 14)"/><rect x="12.5" y="14.5" width="8.5" height="4" rx="2" transform="rotate(-16 16.75 16.5)"/></svg>
+            Kraftfutter
+          </a>
+          <a href="#einstellungen">
+            <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            Einstellungen
+          </a>
+        </nav>
+
+        <h3>Drei Dinge, die überall gleich funktionieren</h3>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Der grüne Kreis mit dem Plus</dt>
+            <dd>Oben rechts. Legt ein neues Kalb an — egal, wo du gerade bist.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>„Mehr anzeigen"</dt>
+            <dd>Listen zeigen erst wenige Einträge. Jeder Klick auf <span class="tipp">Mehr anzeigen</span> blendet 50 weitere ein. Das ist überall in der App gleich.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Nach rechts wischen</dt>
+            <dd>Auf dem Handy: Hast du eine Liste oder Kartei geöffnet, bringt dich ein Wisch nach rechts (vom linken Rand aus) zurück ins Menü — aus der Kälberkartei zurück zu den Kälbern.</dd>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ ÜBERSICHT ============ -->
+      <section id="uebersicht">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Übersicht
+        </h2>
+        <p class="abschnitt-vor">Die Startseite zeigt bewusst nur den heutigen Tag. Sie soll die Frage beantworten „Was ist jetzt gerade zu tun?" — und sonst nichts. Alles, was gestern war oder morgen kommt, steckt im Kalender.</p>
+
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Heute zu erledigen</dt>
+            <dd>Alle offenen Aufgaben, die bis heute fällig sind. Antippen hakt sie ab. Viele entstehen von selbst — die App legt sie nach Alter, Gewicht oder gefressenem Kraftfutter der Kälber an, nach Regeln, die du in den Einstellungen festlegst.</dd>
+            <dd>Das kleine <strong>Papierkorb-Symbol</strong> rechts an der Überschrift zeigt, was in den letzten 30 Tagen erledigt oder gelöscht wurde. <span class="tipp">Zurücksetzen</span> holt eine Aufgabe zurück — war sie erledigt, muss sie danach erneut erledigt werden. Wurde beim Erledigen umgestallt (Paar- oder Gruppenhaltung), macht Zurücksetzen auch das rückgängig: die Kälber kommen in ihre alten Boxen, mit ihrer alten Haltungsform. Ist eine alte Box inzwischen belegt, steht das Kalb ohne Box da und die App sagt dir, welches. <span class="tipp">Kalb absetzen</span> lässt sich nicht löschen, nur bestätigen.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Heute beobachten</dt>
+            <dd>Kälber, bei denen du heute genauer hinschauen solltest. Diese Gründe bringen ein Kalb hierher:</dd>
+            <dd><strong>Trinkrückgang</strong> — es hat weniger getrunken als sonst. Gibt nur die Futterkurve weniger vor und das Kalb trinkt alles aus, zählt das nicht. Das Kalb bleibt zwei Tage stehen, auch wenn es zwischendurch wieder normal säuft. So verschwindet es dir nicht aus dem Blick, bevor klar ist, ob wirklich alles in Ordnung ist.</dd>
+            <dd><strong>Trinkt weniger als Gleichaltrige</strong> — drei Tage am Stück deutlich unter dem, was andere Kälber im selben Alter auf derselben Tränkekurve je Mahlzeit trinken, und es lässt dabei etwas stehen. Verglichen wird mit allen Kälbern des letzten Jahres, sobald mindestens drei Gleichaltrige da sind.</dd>
+            <dd><strong>Trinkt schleichend weniger</strong> — vier Tage hintereinander nie mehr als am Vortag und am Ende spürbar weniger als am Anfang, ohne einen einzelnen großen Einbruch.</dd>
+            <dd>Beide schauen nur auf abgeschlossene Tage bis gestern (alle Reste eingetragen). Kälber an der Gruppentränke bleiben außen vor — dort gibt es nur den Schnitt der Box.</dd>
+            <dd><strong>Laufende Krankheit</strong> — vom Tag des Eintrags bis drei Tage nach der letzten Behandlung des Behandlungsplans.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Der Weg in den Kalender</dt>
+            <dd>Darunter. Dort findest du Vergangenheit, Vorschau und die Suche über alle Aufgaben.</dd>
+          </div>
+        </div>
+
+        <h3>Der Kalender</h3>
+        <p>Ein Monatsraster mit farbigen Punkten: Geburt, Abgang, Fütterung, Wiegung, Krankheit, To-do, erledigt, was noch kommt, und der berechnete Absetz-Tag. Einen Tag antippen zeigt, was an dem Tag war.</p>
+        <p>Über dem Kalender liegt ein Suchfeld für alle Aufgaben. Ein Beispiel, das oft gebraucht wird: Tippe <span class="tipp">abtränken</span> ein, und du siehst, wann welches Kalb beziehungsweise welche Gruppe dran ist — auch für Termine, die noch in der Zukunft liegen. Die Treffer erscheinen als Zeitstrahl um den heutigen Tag herum.</p>
+      </section>
+
+      <!-- ============ KÄLBER ============ -->
+      <section id="kaelber">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 512 512" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path stroke-width="27" d="M196 206 C 210 156 302 156 316 206 C 342 182 380 184 404 212 C 386 238 350 242 322 234 C 328 258 326 272 318 288 C 344 296 350 344 322 364 C 300 382 212 382 190 364 C 162 344 168 296 194 288 C 186 272 184 258 190 234 C 162 242 126 238 108 212 C 132 184 170 182 196 206 Z"/><g fill="currentColor" stroke="none"><circle cx="223" cy="252" r="16"/><circle cx="289" cy="252" r="16"/></g></svg>
+          Kälber
+        </h2>
+        <p class="abschnitt-vor">Alle lebenden Tiere auf einen Blick, mit Filter und Sortierung. Von hier aus geht es in die Kartei des einzelnen Kalbs.</p>
+
+        <h3>Ein Kalb anlegen</h3>
+        <p>Grüner Plus-Knopf oben rechts. Pflicht ist nur die Ohrmarke und das Geburtsdatum — alles Weitere kannst du auch später nachtragen.</p>
+        <div class="tab-huelle">
+          <table>
+            <thead><tr><th>Feld</th><th>Wofür die App das braucht</th></tr></thead>
+            <tbody>
+              <tr><td>Ohrmarke</td><td>Die Nummer des Kalbs in der ganzen App.</td></tr>
+              <tr><td>Name</td><td>Freiwillig. Steht neben der Nummer auf der Kalbkarte und in der Kälberkartei; die Suche findet ihn auch.</td></tr>
+              <tr><td>Geburtsdatum</td><td>Bestimmt das Alter — und damit jede Futterempfehlung und jedes automatische To-do.</td></tr>
+              <tr><td>Geschlecht</td><td>Für Listen und Auswertungen.</td></tr>
+              <tr><td>Geburtsgewicht</td><td>Erster Punkt der Gewichtskurve. Ohne ihn beginnt die Tageszunahme erst bei der ersten Wiegung.</td></tr>
+              <tr><td>Stall &amp; Box</td><td>Legt fest, in welcher Reihenfolge das Kalb beim Füttern drankommt — und ob es zu einer Gruppentränke gehört.</td></tr>
+              <tr><td>Futterkurve</td><td>Welche Milchkurve gilt. Ohne Auswahl gilt die Standardkurve.</td></tr>
+              <tr><td>Kraftfutter-Kurve</td><td>Dasselbe fürs Kraftfutter.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Gibt es die Ohrmarke schon, fragt die App nach, bevor sie speichert: die kurze Ohrmarke nur unter den lebenden Tieren (sie wiederholt sich über die Jahre), die lange amtliche auch im Archiv.</p>
+
+        <h3>Die Kartei eines Kalbs</h3>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Gewicht</dt>
+            <dd>Wiegungen eintragen. Aus zwei Punkten rechnet die App die Tageszunahme in Gramm pro Tag.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Biestmilch</dt>
+            <dd>Je Gabe: Stunden nach der Geburt, Liter und Brix-Wert. Daraus rechnet die App die aufgenommene IgG-Menge und bewertet die Versorgung mit einer Ampel. Der Zeitpunkt der ersten Gabe zählt dabei am meisten.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Krankheiten &amp; Behandlungsplan</dt>
+            <dd>Krankheit eintragen, Behandlungen als Plan hinterlegen. Solange der Plan läuft, steht das Kalb in „Heute beobachten" — und noch drei Tage nach der letzten Behandlung.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Lebenslinie</dt>
+            <dd>Alles, was dem Kalb je passiert ist, auf einem Zeitstrahl: Gewicht, Fütterung, Krankheiten, Standortwechsel.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Umstallen</dt>
+            <dd>Kalb in eine andere Box schieben. Dabei lässt sich ankreuzen, ob die Box als Gruppe getränkt beziehungsweise als Gruppe mit Kraftfutter versorgt wird. Unter <span class="tipp">Umgestallt am</span> trägst du ein, seit wann die Kälber so stehen — hast du gestern umgestallt und trägst es erst heute ein, stell gestern ein. Fütterungen vor diesem Tag laufen dann noch mit den bisherigen Gruppen.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Archivieren</dt>
+            <dd>Wenn das Tier den Betrieb verlässt: mit Grund (Verkauf, Schlachtung, Tod, Kalbung) und bei Verkauf mit Preis und Gewicht — beides fließt in die Bilanz. Archivierte Tiere bleiben in <span class="pfad">Listen → Archiv</span> und lassen sich von dort zurückholen. Von selbst wandert kein Tier ins Archiv, egal wie alt.</dd>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ MILCH ============ -->
+      <section id="milch">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2h8"/><path d="M9 2v3a5 5 0 0 0-5 5v9a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-9a5 5 0 0 0-5-5V2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg>
+          Milch
+        </h2>
+        <p class="abschnitt-vor">Der Reiter fürs Tränken. Er zeigt immer nur die <em>nächste offene Mahlzeit</em> — sind morgens alle Kälber versorgt, springt die Anzeige auf mittags beziehungsweise abends und am Ende des Tages auf morgen früh.</p>
+
+        <h3>Ein Durchgang von vorne bis hinten</h3>
+        <ol class="schritte">
+          <li><p><strong>Auf den Knopf mit dem Futtertyp tippen</strong> — darunter steht <span class="tipp">Starten</span>. Gibt es mehrere Futtertypen (Vollmilch, MAT-Sorten), hat jeder seinen eigenen Knopf.</p></li>
+          <li><p><strong>Restmilch der letzten Runde eintragen.</strong> Die App fragt zuerst, was übrig geblieben ist — der Knopf heißt <span class="tipp">Restmilch</span>, das Fenster darauf „Restmenge erfassen". Erst danach rechnet sie die neue Empfehlung; sonst würde sie mit falschen Zahlen weiterarbeiten.</p></li>
+          <li><p><strong>Durch die Kälber gehen.</strong> Boxenweise in der Reihenfolge des Stalls. Je Kalb steht die empfohlene Menge da; du kannst sie überschreiben, wenn du anders entscheidest.</p></li>
+          <li><p><strong>Zusammenfassung.</strong> Am Ende siehst du, was insgesamt rausging — je Kalb mit Box und Alter. Eine Box mit Gruppentränke steht als eine Zeile da: was die Gruppe insgesamt bekam und wie viel das je Kalb ist. Dieselbe Übersicht öffnet ein Tipp auf eine Runde unter „Letzte Runden", dann mit den Resten.</p></li>
+        </ol>
+
+        <div class="merke">
+          <p><b>Unterbrechen statt abbrechen.</b> Unter dem Rundgang steht <span class="tipp">Unterbrechen</span>. Er führt zurück ins Menü, und dort ist der Knopf der Mahlzeit geteilt: links <span class="tipp">Fütterung fortsetzen</span> — es geht beim Kalb weiter, bei dem du aufgehört hast —, rechts <span class="tipp">Fütterung abbrechen</span>, das verwirft alles, was in dieser Runde schon erfasst war. Wechselst du mitten im Rundgang in einen anderen Reiter oder schließt die App, wird ebenso pausiert. Beim Kraftfutter genauso.</p>
+        </div>
+
+        <h3>Woher die empfohlene Menge kommt</h3>
+        <p>Die Futterkurve gibt je Alter eine Milchmenge vor; zwischen den Stützpunkten rechnet die App linear. Darauf legt sie drei Sicherungen:</p>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Höchstens ein Liter mehr pro Tag</dt>
+            <dd>Damit kein Kalb von heute auf morgen deutlich mehr bekommt.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Mindestens zwei Liter</dt>
+            <dd>Untergrenze, egal was die Kurve sagt.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Rücksicht auf den letzten Rest</dt>
+            <dd>Hat ein Kalb beim letzten Mal etwas stehen lassen, bekommt es höchstens einen Liter mehr, als es tatsächlich getrunken hat. Sonst schaukelt sich die Menge an einem Kalb hoch, das ohnehin nicht austrinkt.</dd>
+          </div>
+        </div>
+
+        <h3>Ad libitum</h3>
+        <p>Wird je Zeile der Futterkurve angekreuzt und gilt genau für deren Altersbereich. Dann bestimmt nicht die Kurve die Menge, sondern das Kalb: „zuletzt aufgenommen plus Puffer". Tageszeit, Anzahl der Mahlzeiten und Futtertyp kommen weiter aus derselben Zeile — nur die Menge nicht.</p>
+
+        <h3>Absetzen (Abtränken)</h3>
+        <p>Ist ein Kalb aus der Kurve herausgewachsen, gibt es keine Milch mehr — dort greift das Absetzen. Die App legt dafür rechtzeitig ein To-do an (<span class="tipp">Kalb absetzen</span>, bei einer Gruppentränke ein einziges <span class="tipp">Kälber absetzen</span> mit dem Namen der Gruppe) und trägt den Tag im Kalender ein. Wann das kommt, siehst du vorher über die Kalendersuche nach <span class="tipp">abtränken</span>. Der Eintrag nennt die Tränkekurve und das Alter, mit dem abgesetzt wird — hängen Kälber an verschiedenen Kurven, kann ein jüngeres Kalb deshalb früher dran sein als ein älteres. In einer Box mit Gruppentränke und bei Paaren zählt das jüngste Tier.</p>
+
+        <div class="merke">
+          <p><b>„Rest vom Vortag"</b> — steht statt <span class="tipp">Starten</span> dort dieser Knopf, ist die Runde davor noch offen. Erst den Rest eintragen, dann geht es normal weiter. Das gilt nur für die <em>unmittelbar vorige</em> Mahlzeit; liegt mehr dazwischen, verfällt der Knopf und die alte Runde bleibt als „Rest offen" in den letzten Runden stehen.</p>
+        </div>
+      </section>
+
+      <!-- ============ KRAFTFUTTER ============ -->
+      <section id="kraftfutter">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4.5" width="8.5" height="4" rx="2" transform="rotate(-18 7.25 6.5)"/><rect x="13" y="7" width="8" height="4" rx="2" transform="rotate(14 17 9)"/><rect x="2.5" y="12" width="8" height="4" rx="2" transform="rotate(10 6.5 14)"/><rect x="12.5" y="14.5" width="8.5" height="4" rx="2" transform="rotate(-16 16.75 16.5)"/></svg>
+          Kraftfutter
+        </h2>
+        <p class="abschnitt-vor">Funktioniert wie die Milch, ist aber absichtlich schlanker: Die Futtermethode gibt <strong>Kilogramm pro Tag</strong> vor, es gibt also <strong>eine Runde am Tag und keine Tageszeiten</strong>.</p>
+
+        <h3>Der Rundgang</h3>
+        <p>Die Boxen kommen in der Reihenfolge, die du unter <span class="pfad">Einstellungen → Kraftfutter</span> festlegst — sie kann anders sein als bei der Milch. Je Kalb steht die empfohlene Menge und darunter „Zuletzt gefressen". Zwei Gesten:</p>
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Antippen von „Weiter"</dt>
+            <dd>Ein Kalb weiter, wie gewohnt.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>„Weiter" drei Sekunden gedrückt halten</dt>
+            <dd>Erfasst alle übrigen Kälber auf einmal mit ihrer Empfehlung. Ein Balken im Knopf zeigt, wie lange noch. Praktisch, wenn ohnehin alle die vorgeschlagene Menge bekommen.</dd>
+          </div>
+        </div>
+
+        <div class="merke">
+          <p><b>Die Reste kommen später.</b> Anders als bei der Milch endet der Rundgang mit der Zusammenfassung — die Reste trägst du danach in einem eigenen Durchgang über <span class="tipp">Reste eintragen</span> ein. Bis dahin bleibt die Runde offen und die Zusammenfassung zeigt nur, was gegeben wurde.</p>
+        </div>
+
+        <h3>Vorlage für mehrere Tage</h3>
+        <p>Unter „Gegeben" stehen drei Knöpfe: <span class="tipp">1 Tag</span>, <span class="tipp">2 Tage</span>, <span class="tipp">3 Tage</span>. Sie rechnen nur aus, wie viel du vorlegen musst: Tagesmenge mal Tage (bei ad libitum kommt der Puffer einmal dazu). Gespeichert wird allein die Menge, die du gibst. Wie lange sie tatsächlich reicht, hältst du beim Reste-Eintragen fest: solange noch genug im Trog liegt, wählst du dort „nicht gefüttert". Wenn du dann den Rest einträgst, teilt die App die gefressene Menge auf diese Tage auf — in der Zusammenfassung steht je Kalb, wie viel es pro Tag gefressen hat, und das Diagramm zeigt für jeden Tag eine eigene Säule.</p>
+
+        <h3>„Nicht gefüttert"</h3>
+        <p>Liegt noch genug im Trog, legst du nichts Neues vor. Dafür gibt es je Kalb einen schlichten Knopf und für alle auf einmal den deutlich gerahmten <span class="tipp">Alle Tiere heute nicht gefüttert</span>. Der Tag gilt damit als erledigt, ohne dass ein Rest erfunden wird.</p>
+        <p>Solche Kälber fallen aus der nächsten Fütterung heraus und tauchen beim nächsten Reste-Eintragen wieder auf, zusammen mit allen anderen Kälbern — beliebig oft und beliebig lange, solange du wieder „nicht gefüttert" wählst. Beendet wird die Kette erst, wenn du einen Rest einträgst und wieder fütterst.</p>
+        <p>Kommt ein Kalb zum <strong>ersten Mal</strong> ans Kraftfutter, während noch Reste der Vortage offen sind, trägst du zuerst die Reste ein. Danach wird das neue Kalb zusammen mit allen gefüttert, deren Rest du gerade eingetragen hast — statt allein vorweg und die anderen erst am nächsten Tag.</p>
+
+        <div class="achtung">
+          <p><b>Die Tage müssen der Reihe nach ausgefüllt werden.</b> Springst du vom 21. zum 23., zeigt die App statt des Fütterungs-Knopfes den Hinweis auf den fehlenden 22. und einen Sprung dorthin. Ein ausgelassener Tag verfällt also nicht stillschweigend mit null Rest.</p>
+        </div>
+
+        <h3>Gruppen-Kraftfutter</h3>
+        <p>Ist eine Box als Gruppe angekreuzt, wird sie wie die Gruppentränke als <strong>eine Einheit</strong> gefüttert. Den Takt gibt das <strong>jüngste Tier mit gültiger Kurvenzeile</strong> vor: Wer aus seiner Futtermethode herausgewachsen ist, frisst am selben Trog weiter mit. Erst wenn <em>alle</em> Tiere der Box zu alt sind, endet das Kraftfutter für die Box.</p>
+        <p>Holst du einen vergangenen Tag nach oder trägst Reste von gestern ein, gelten die Gruppen, wie sie <strong>an dem Tag</strong> standen — nicht die von heute. Das gilt bei der Gruppentränke genauso. Die App merkt sich dafür bei jedem Umstallen das Datum — das, was du unter <span class="tipp">Umgestallt am</span> einträgst.</p>
+      </section>
+
+      <!-- ============ LISTEN ============ -->
+      <section id="listen">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Listen
+        </h2>
+        <p class="abschnitt-vor">Hier steht die Auswertung. Elf Karten, jede führt in eine eigene Ansicht. Nichts davon musst du pflegen — alles rechnet sich aus dem, was du beim Füttern und in den Karteien einträgst.</p>
+
+        <div class="eintraege">
+          <div class="eintrag"><dt>Vergangene Fütterungen</dt><dd>Alle Runden rückwärts, je Kalb oder je Runde. Offene Runden stehen als „Rest offen" drin. In der Grafik erscheint die letzte Fütterung erst, wenn ihr Rest eingetragen ist — vorher wäre die Säule nur die Vorlage, nicht das, was gefressen wurde.</dd></div>
+          <div class="eintrag"><dt>Lebenslinien</dt><dd>Gewicht und Verlauf je Kalb als Kurve.</dd></div>
+          <div class="eintrag"><dt>Biestmilchversorgung</dt><dd>Je Kalb die errechnete IgG-Versorgung mit Ampel. Der beste Frühindikator dafür, wie ein Jahrgang laufen wird.</dd></div>
+          <div class="eintrag"><dt>Krankheiten</dt><dd>Alle Einträge, sortierbar.</dd></div>
+          <div class="eintrag"><dt>Tageszunahme</dt><dd>Gewichtsentwicklung in Gramm pro Tag, über alle gewogenen Tiere.</dd></div>
+          <div class="eintrag"><dt>Futterkurven-Zuweisung</dt><dd>Welches Kalb hängt an welcher Kurve — die Stelle, an der man Zuordnungsfehler findet.</dd></div>
+          <div class="eintrag"><dt>Gruppen</dt><dd>Boxen und Gruppen je Stall, mit Belegung.</dd></div>
+          <div class="eintrag"><dt>Futterkosten</dt><dd>Je Kalb in Euro, mit Alter und Box, darunter wofür das Geld ging (Milch, MAT, Kraftfutter). Oben die Summe aller Kälber und der Schnitt je Kalb. Teuerstes Tier zuerst; sortieren lässt sich auch nach Nummer oder Alter.</dd></div>
+          <div class="eintrag"><dt>Bilanz</dt><dd>Kennzahlen je Jahr und je Monat — siehe unten.</dd></div>
+          <div class="eintrag"><dt>Archiv</dt><dd>Abgegangene Tiere, mit Weg zurück.</dd></div>
+          <div class="eintrag"><dt>CSV-Export</dt><dd>Fertige Exporte für Excel und ein Generator für eigene Listen: Spalten selbst zusammenstellen.</dd></div>
+        </div>
+
+        <h3>Die Bilanz</h3>
+        <p>Oben wählst du ein Jahr, darunter optional einen Monat. Die Kacheln zeigen alles, wozu es im Zeitraum Daten gibt: Geburten, Abgänge, Durchschnitts-Verkaufspreis und -gewicht, Futterkosten, getrunkene Milch, gefressenes Kraftfutter, Krankheiten, Biestmilch, Tageszunahme, erledigte Aufgaben und den Bestand.</p>
+        <p>Darunter laufen dieselben Zahlen als Diagramme — über alle Jahre, oder über die Monate, wenn du einen Monat gewählt hast. Daran siehst du, ob es besser wird.</p>
+        <p>Ist ein Monat vorbei, meldet die App beim ersten Öffnen einmal, dass der <strong>Monatsbericht</strong> fertig ist — mit einem Knopf direkt zu diesem Monat.</p>
+        <div class="merke"><p><b>Kacheln fehlen?</b> Das ist kein Fehler: Die Bilanz zeigt nur Kennzahlen, zu denen es im gewählten Zeitraum wirklich Daten gibt.</p></div>
+      </section>
+
+      <!-- ============ EINSTELLUNGEN ============ -->
+      <section id="einstellungen">
+        <h2>
+          <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          Einstellungen
+        </h2>
+        <p class="abschnitt-vor">Hier wird festgelegt, wie die App rechnet. Wenn eine PIN eingerichtet ist, fragt sie hier einmal danach.</p>
+
+        <h3>Allgemein</h3>
+        <div class="eintraege">
+          <div class="eintrag"><dt>Push-Benachrichtigungen</dt><dd>Ein- und ausschalten, Uhrzeit für den Tageslauf festlegen (Standard 06:00). Zu dieser Zeit legt die App auch die neuen To-dos an. Mit „Urlaub eintragen“ schweigen die Mitteilungen für ein paar Tage, nur auf diesem Gerät – wer dich vertritt, bekommt sie weiter. Öffnest du die App im Ausland, fragt sie von selbst, ob du im Urlaub bist.</dd></div>
+          <div class="eintrag"><dt>Standort &amp; Wetter</dt><dd>Ort eintragen, damit die kleine Wetteranzeige oben funktioniert und die Hitze- und Frost-Erinnerungen greifen. Die Hitze-Schwelle stellst du hier selbst ein.</dd></div>
+          <div class="eintrag"><dt>PIN</dt><dd>Vierstellige Sperre für genau diese Ansicht. Einrichten, ändern oder ganz abschalten.</dd></div>
+          <div class="eintrag"><dt>Login-Passwort</dt><dd>Das Passwort für alle ändern. Gilt ab sofort — wer angemeldet bleibt, merkt es erst beim nächsten Anmelden.</dd></div>
+        </div>
+
+        <h3>Futter</h3>
+        <div class="eintraege">
+          <div class="eintrag"><dt>Futterkurve &amp; Abtränken</dt><dd>Die Milchkurven verwalten: je Zeile ein Altersbereich mit Menge, Anzahl Mahlzeiten, Tageszeiten und Futtertyp. Hier sitzt auch das Ad-libitum-Häkchen je Zeile und die Regel, wann abgetränkt wird.</dd></div>
+          <div class="eintrag"><dt>Fütterungs-Parameter &amp; MAT-Mischung</dt><dd>Grenzwerte der Empfehlung und die MAT-Sorten: Name, Mischverhältnis, Kosten je Kilo. Vollmilch ist fix, dazu kommen bis zu vier MAT-Sorten.</dd></div>
+          <div class="eintrag"><dt>Kraftfutter</dt><dd>Kurven als Kilogramm pro Tag je Altersbereich, die Futtermittel mit ihren Preisen, und die Schnellwahl-Knöpfe fürs Reste-Eintragen.</dd></div>
+          <div class="eintrag"><dt>Schnellwahl beim Reste-Eintragen</dt><dd>Bis zu vier Mengen, die du beim Reste-Eintragen mit einem Tipp auswählen kannst — für Milch und Kraftfutter getrennt. Null ist ein gültiger Knopf („nichts übrig").</dd></div>
+        </div>
+
+        <h3>Stall und Aufgaben</h3>
+        <div class="eintraege">
+          <div class="eintrag"><dt>Haltungsformen</dt><dd>Die Haltungsformen, die du beim Anlegen eines Kalbs auswählen kannst.</dd></div>
+          <div class="eintrag"><dt>Ställe, Boxen, Gruppen</dt><dd>Die Struktur deines Stalls. Mit ▲ ▼ legst du die Reihenfolge der Ställe fest: rücken zwei aufeinanderfolgende Ställe automatisch auf, rutschen die Kälber aus der letzten Box des vorderen in die erste Box des hinteren. Die Reihenfolge der Boxen beim Füttern stellst du getrennt für Milch und Kraftfutter ein — es lohnt sich, sie so zu legen, wie du tatsächlich läufst.</dd></div>
+          <div class="eintrag"><dt>To-do-Regeln</dt><dd>Nach welchen Regeln die App von selbst Aufgaben anlegt, etwa nach Alter, Gewicht oder dem Ø gefressenen Kraftfutter pro Woche (letzte 7 Tage).</dd></div>
+        </div>
+
+        <h3>Daten</h3>
+        <div class="eintraege">
+          <div class="eintrag"><dt>Datenbank exportieren</dt><dd>Lädt die komplette Datenbank als Datei herunter. Das ist dein Backup — siehe <a href="#sichern">Daten sichern</a>.</dd></div>
+          <div class="eintrag"><dt>Datenbank importieren</dt><dd>Eine Datei wieder einspielen, entweder als vollständiger Ersatz oder um Kälber zu ergänzen. Die App legt vorher automatisch ein Sicherheits-Backup an.</dd></div>
+          <div class="eintrag"><dt>Gefahrenzone</dt><dd>Der Werksreset. Löscht alles und setzt die App in den Auslieferungszustand zurück. Verlangt das Login-Passwort und eine ausdrückliche Bestätigung.</dd></div>
+        </div>
+
+        <div class="achtung"><p><b>Vor dem Werksreset immer exportieren.</b> Danach ist nichts mehr da — keine Kälber, keine Fütterungen, keine Historie.</p></div>
+      </section>
+
+      <!-- ============ HILFE ============ -->
+      <section id="hilfe">
+        <h2>Häufige Fragen</h2>
+
+        <div class="eintraege">
+          <div class="eintrag">
+            <dt>Die App fragt wieder nach dem Passwort</dt>
+            <dd>Normal. Die Anmeldung gilt 15 Tage und verlängert sich nicht durch Benutzung. Einfach neu anmelden.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Ich bekomme keine Mitteilungen</dt>
+            <dd>Auf dem iPhone der häufigste Grund: Die App wurde aus Safari gestartet statt über das Symbol auf dem Home-Bildschirm. Nur vom Home-Bildschirm aus funktionieren Mitteilungen. Ansonsten prüfen, ob der Schalter in <span class="pfad">Einstellungen → Push-Benachrichtigungen</span> an ist und ob das Gerät die Erlaubnis nicht abgelehnt hat.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Der Browser warnt vor der Verbindung</dt>
+            <dd>Passiert, wenn du die App im eigenen Netz über die IP-Adresse aufrufst — dort nutzt sie ein selbst ausgestelltes Zertifikat. Über den Link von außen tritt das nicht auf. Im Heimnetz kannst du die Warnung bestätigen.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Beim Füttern steht „Rest vom Vortag" statt „Starten"</dt>
+            <dd>Die vorige Runde ist noch offen. Rest eintragen, dann geht es normal weiter. Das ist bewusst so: ohne den Rest rechnet die nächste Empfehlung mit falschen Zahlen.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Beim Kraftfutter fehlt der Fütterungs-Knopf</dt>
+            <dd>Es ist ein früherer Tag offen. Die App nennt dir das Datum und bringt dich mit einem Tipp dorthin. Erst den Tag beantworten — mit einem Rest oder mit „nicht gefüttert" — dann geht es weiter.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Die Zahlen in der Bilanz sehen zu niedrig aus</dt>
+            <dd>In Milch, Kraftfutter und Kosten zählen nur Runden, deren Reste eingetragen sind — bei der Milch also die Restmilch, beim Kraftfutter der Rest im Trog. Offene Runden fehlen also. In <span class="pfad">Listen → Vergangene Fütterungen</span> siehst du, welche noch „Rest offen" sind.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Ein Kalb bekommt keine Futterempfehlung mehr</dt>
+            <dd>Dann ist es aus seiner Kurve herausgewachsen. Ein Alter jenseits der Kurve ist nie ad libitum — dort greift das Absetzen.</dd>
+          </div>
+          <div class="eintrag">
+            <dt>Beim Öffnen kam ein Fenster „Update installiert"</dt>
+            <dd>Es wurde eine neue Version eingespielt; das Fenster zeigt, was sich geändert hat. Einmal wegtippen, dann ist es weg. Die laufende Version steht immer unten im Fuß der App — antippen zeigt die Details.</dd>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ SICHERN ============ -->
+      <section id="sichern">
+        <h2>Daten sichern</h2>
+        <p class="abschnitt-vor">Die gesamte Historie steckt in einer einzigen Datei auf dem Server. Ein vollständiges Backup ist eine Kopie davon.</p>
+        <ol class="schritte">
+          <li><p><strong>In die Einstellungen gehen</strong> und <span class="tipp">Datenbank exportieren</span> wählen.</p></li>
+          <li><p><strong>Die Datei sicher ablegen</strong> — auf dem Rechner, einem Stick oder in einer Cloud. Nicht nur auf dem Gerät, von dem aus du sie geladen hast.</p></li>
+          <li><p><strong>Regelmäßig wiederholen.</strong> Einmal im Monat reicht für die meisten Betriebe. Auf jeden Fall vor größeren Änderungen und vor einem Werksreset.</p></li>
+        </ol>
+        <p>Zurückspielen geht denselben Weg über <span class="tipp">Datenbank importieren</span>. Die App prüft die Datei vorher und legt automatisch ein Sicherheits-Backup des aktuellen Stands an, bevor sie etwas überschreibt.</p>
+      </section>
+
+      <div class="leer-treffer" id="leer-treffer" hidden>
+        <p style="margin:0;">Dazu steht hier nichts. Versuch ein anderes Wort — oder <button type="button" id="suche-leeren" style="background:none;border:0;color:var(--gruen-tief);font:inherit;text-decoration:underline;cursor:pointer;padding:0;">zeig mir wieder alles</button>.</p>
+      </div>
+
+      <footer class="fuss">
+        <p style="margin:0;">Kälber-Management — die laufende Version steht unten im Fuß der App. Fragen, die hier nicht beantwortet sind, gehen an den Betreiber deiner Instanz; in der App findest du unter <span class="pfad">Einstellungen → Hilfe</span> die Kontaktwege und die Systeminfos, die bei einer Anfrage helfen.</p>
+      </footer>
+
+    </main>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- Plattform-Umschalter für die Installation ---- */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.plattformen button'));
+  tabs.forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      tabs.forEach(function (t) {
+        var offen = t === tab;
+        t.setAttribute('aria-selected', offen ? 'true' : 'false');
+        document.getElementById(t.dataset.ziel).hidden = !offen;
+      });
+    });
+  });
+
+  /* ---- Suche: blendet Einträge und ganze Abschnitte aus, die nicht passen ---- */
+  var feld = document.getElementById('suche');
+  var info = document.getElementById('suche-info');
+  var leer = document.getElementById('leer-treffer');
+  var abschnitte = Array.prototype.slice.call(document.querySelectorAll('main section'));
+
+  // Jeder Abschnitt bekommt seine durchsuchbaren Blöcke: einzelne Einträge,
+  // Schritte, Tabellenzeilen, Hinweise und freie Absätze.
+  var bloecke = abschnitte.map(function (sec) {
+    var teile = Array.prototype.slice.call(
+      sec.querySelectorAll('.eintrag, .schritte > li, tbody tr, .merke, .achtung, h3, :scope > p')
+    );
+    return { sec: sec, teile: teile, titel: sec.querySelector('h2').textContent };
+  });
+
+  function zuruecksetzen() {
+    bloecke.forEach(function (b) {
+      b.sec.hidden = false;
+      b.teile.forEach(function (t) { t.hidden = false; });
+    });
+    info.hidden = true;
+    leer.hidden = true;
+  }
+
+  function suchen(q) {
+    q = q.trim().toLowerCase();
+    if (q.length < 2) { zuruecksetzen(); return; }
+
+    var treffer = 0;
+    var abschnitteMitTreffer = 0;
+
+    bloecke.forEach(function (b) {
+      var imTitel = b.titel.toLowerCase().indexOf(q) !== -1;
+      var gefunden = 0;
+
+      b.teile.forEach(function (t) {
+        var passt = imTitel || t.textContent.toLowerCase().indexOf(q) !== -1;
+        t.hidden = !passt;
+        if (passt) gefunden++;
+      });
+
+      b.sec.hidden = gefunden === 0;
+      if (gefunden > 0) { abschnitteMitTreffer++; treffer += gefunden; }
+    });
+
+    leer.hidden = treffer > 0;
+    info.hidden = false;
+    info.innerHTML = treffer > 0
+      ? '<b>' + treffer + '</b> ' + (treffer === 1 ? 'Stelle' : 'Stellen') + ' in ' +
+        abschnitteMitTreffer + ' ' + (abschnitteMitTreffer === 1 ? 'Kapitel' : 'Kapiteln') + ' — Esc zeigt wieder alles.'
+      : 'Kein Treffer für „' + q + '".';
+  }
+
+  feld.addEventListener('input', function () { suchen(feld.value); });
+  feld.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') { feld.value = ''; zuruecksetzen(); }
+  });
+  document.getElementById('suche-leeren').addEventListener('click', function () {
+    feld.value = '';
+    zuruecksetzen();
+    feld.focus();
+  });
+
+  /* ---- Sprung aus dem Inhaltsverzeichnis: erst Suche leeren, sonst ist das Ziel versteckt ---- */
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    if (feld.value) { feld.value = ''; zuruecksetzen(); }
+  });
+})();
+</script>
+</body>
+</html>

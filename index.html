@@ -1,0 +1,669 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kälber Management – die Stalltafel, die mitrechnet</title>
+<meta name="description" content="Kälber Management begleitet die Kälberaufzucht: Milch- und Kraftfutter-Rundgang mit Empfehlung je Kalb, „Heute beobachten“, automatische To-dos mit Erinnerung, Kalender und Bilanz. Läuft auf deinem Hof.">
+<meta property="og:title" content="Kälber Management – die Stalltafel, die mitrechnet">
+<meta property="og:description" content="Rundgang mit Empfehlung je Kalb, „Heute beobachten“, To-dos mit Erinnerung und Bilanz. Läuft auf deinem Hof, die Daten bleiben bei dir.">
+<meta property="og:type" content="website">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#1f4d24" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#133219" media="(prefers-color-scheme: dark)">
+<link rel="icon" type="image/svg+xml" href="images/logo.svg">
+<link rel="icon" type="image/png" sizes="192x192" href="images/logo-192.png">
+<link rel="apple-touch-icon" href="images/logo-180.png">
+<style>
+  :root {
+    color-scheme: light dark;
+    --grund: #f6faf5;
+    --grund-2: #eaf3e8;
+    --flaeche: #ffffff;
+    --tinte: #1a2e1a;
+    --tinte-2: #46644a;
+    --linie: #d6e4d2;
+    --gruen: #3d9e3d;
+    --gruen-text: #2e7b2e;
+    --stall: #1f4d24;
+    --auf-stall-2: #cfe8cb;
+    --bernstein: #9a5f0c;
+    --ziegel: #b8352a;
+
+    /* Die Tafel ist ein Gegenstand: ihre Farben bleiben in hell und dunkel gleich */
+    --tafel: #fbfcfa;
+    --stift-schwarz: #1e2622;
+    --stift-rot: #c62828;
+    --stift-blau: #1f5fae;
+    --stift-gruen: #2e7b2e;
+
+    --sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    /* ponytail: Handschrift aus den Systemschriften, kein Download; sieht je Gerät etwas anders aus */
+    --hand: "Marker Felt", "Noteworthy", "Segoe Print", "Ink Free", "Bradley Hand", casual, cursive;
+    --aussen: clamp(16px, 4vw, 40px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --grund: #0f150e;
+      --grund-2: #151d14;
+      --flaeche: #1b241a;
+      --tinte: #e7eee4;
+      --tinte-2: #a6b8a2;
+      --linie: #2b3829;
+      --gruen-text: #7fcf7a;
+      --stall: #133219;
+      --auf-stall-2: #b9dcb4;
+      --bernstein: #e3a54c;
+      --ziegel: #f08a7c;
+      --tafel: #eceee9;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-padding-top: 16px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  body {
+    margin: 0;
+    background: var(--grund);
+    color: var(--tinte);
+    font: 400 clamp(17px, 16px + .25vw, 19px)/1.5 var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection { background: rgba(61, 158, 61, .28); }
+  a { color: var(--gruen-text); text-underline-offset: .18em; text-decoration-thickness: 1px; }
+  :focus-visible { outline: 3px solid var(--gruen); outline-offset: 3px; border-radius: 6px; }
+  h1, h2, h3, p { margin: 0; }
+  .huelle { max-width: 1140px; margin: 0 auto; padding: 0 var(--aussen); }
+  .ico { width: 1em; height: 1em; flex: none; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---------- Knöpfe ---------- */
+  .knopf {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+    min-height: 52px; padding: 0 26px;
+    border-radius: 999px;
+    font: 600 1.0625rem/1 var(--sans);
+    text-decoration: none;
+    background: var(--gruen-text); color: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .14), 0 6px 16px -6px rgba(0, 0, 0, .35);
+    transition: transform .2s cubic-bezier(.22, 1, .36, 1), box-shadow .2s;
+  }
+  .knopf:hover { transform: translateY(-1px); box-shadow: 0 1px 2px rgba(0, 0, 0, .14), 0 10px 22px -8px rgba(0, 0, 0, .42); }
+  .knopf:active { transform: translateY(0) scale(.98); }
+  .knopf-hell { background: #fff; color: #1f4d24; }
+  @media (prefers-color-scheme: dark) { .knopf { background: #3d9e3d; color: #0b1a0c; } .knopf-hell { background: #fff; color: #133219; } }
+
+  /* ---------- Kopf + Held ---------- */
+  .held {
+    background: var(--stall);
+    color: #fff;
+    padding-bottom: clamp(48px, 8vw, 104px);
+    overflow: hidden;
+  }
+  .kopf { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding-top: env(safe-area-inset-top); }
+  .marke { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 650; font-size: 1.0625rem; letter-spacing: -.01em; }
+  .marke svg { width: 34px; height: 34px; border-radius: 8px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .18); }
+  .kopf-link { color: var(--auf-stall-2); text-decoration: none; font-size: .9375rem; font-weight: 600; padding: 10px 0; }
+  .kopf-link:hover { color: #fff; }
+
+  .held-raster { display: grid; gap: 28px; padding-top: 8px; }
+  .held-text h1 {
+    font-size: clamp(2.375rem, 1.5rem + 4.4vw, 4.5rem);
+    line-height: 1.02;
+    letter-spacing: -.035em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .held-text .lead {
+    margin-top: 16px;
+    max-width: 34em;
+    color: var(--auf-stall-2);
+    font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem);
+    line-height: 1.45;
+    text-wrap: pretty;
+  }
+  .held-aktion { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
+  .held-aktion small { color: var(--auf-stall-2); font-size: .9375rem; }
+
+  /* ---------- Die Stalltafel ---------- */
+  .tafel-halter { position: relative; padding-bottom: 12px; }
+  .rahmen {
+    position: relative;
+    padding: 7px;
+    border-radius: 10px;
+    background: linear-gradient(160deg, #eef1ec 0%, #b7beb5 38%, #dfe3dc 62%, #a4aca2 100%);
+    box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .7), 0 4px 10px rgba(0, 0, 0, .28);
+    transform: rotate(-.8deg);
+  }
+  .tafel {
+    position: relative;
+    border-radius: 4px;
+    padding: 16px 18px 22px;
+    background:
+      radial-gradient(60% 40% at 78% 22%, rgba(110, 130, 115, .07), transparent 70%),
+      radial-gradient(50% 35% at 18% 82%, rgba(110, 130, 115, .06), transparent 70%),
+      var(--tafel);
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, .12);
+    font-family: var(--hand);
+    color: var(--stift-schwarz);
+  }
+  .tafel-titel {
+    display: flex; justify-content: space-between; align-items: baseline;
+    font-size: 1.5rem; line-height: 1.2; margin-bottom: 6px;
+    color: var(--stift-gruen);
+  }
+  .tafel-titel span:first-child { background: linear-gradient(transparent 82%, rgba(46, 123, 46, .55) 82%, rgba(46, 123, 46, .55) 90%, transparent 90%); padding-right: 4px; }
+  .tafel-titel small { font-size: .95rem; color: var(--stift-schwarz); opacity: .7; }
+  .tafel ul { list-style: none; margin: 0; padding: 0; }
+  .tz {
+    display: flex; align-items: center; gap: .55em;
+    min-height: 44px;
+    margin: 0 -8px; padding: 4px 8px;
+    border-radius: 8px;
+    color: inherit;
+    text-decoration: none;
+    font-size: clamp(1.125rem, 1rem + .8vw, 1.5rem);
+    line-height: 1.15;
+    transform: rotate(var(--r, 0deg));
+    transition: background-color .25s;
+  }
+  a.tz:hover, a.tz:focus-visible { background-color: rgba(242, 222, 70, .45); outline-offset: 0; }
+  .tz b { font-weight: inherit; opacity: .75; min-width: 2.6em; }
+  .rot, .notiz.rot { color: var(--stift-rot); }
+  .blau, .notiz.blau { color: var(--stift-blau); }
+  .gruen, .notiz.gruen { color: var(--stift-gruen); }
+  .kreis { position: relative; padding: 0 2px; }
+  .kreis::after {
+    content: ""; position: absolute; inset: -7px -12px -6px -10px;
+    border: 2px solid currentColor;
+    border-radius: 50% 46% 52% 48% / 60% 48% 56% 44%;
+    transform: rotate(-2.5deg);
+  }
+  .tz del { text-decoration-thickness: 2px; text-decoration-color: var(--stift-schwarz); opacity: .72; }
+  .ablage {
+    position: absolute; left: 12%; right: 12%; bottom: 0; height: 13px;
+    border-radius: 0 0 5px 5px;
+    background: linear-gradient(#cfd4cd, #9ea69c);
+    box-shadow: 0 6px 10px -4px rgba(0, 0, 0, .5);
+    transform: rotate(-.8deg);
+  }
+  .stift {
+    position: absolute; bottom: 8px; right: 22%; width: 96px; height: 12px;
+    border-radius: 6px 3px 3px 6px;
+    background: linear-gradient(90deg, #eef0ea 0 70%, #2e7b2e 70% 100%);
+    box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12), 0 2px 3px rgba(0, 0, 0, .35);
+    transform: rotate(-.8deg);
+  }
+  .tafel-tipp { margin-top: 14px; color: var(--auf-stall-2); font-size: .9375rem; display: flex; align-items: center; gap: 8px; }
+
+  /* Die Tafel schreibt sich beim Öffnen einmal selbst */
+  @media (prefers-reduced-motion: no-preference) {
+    .tafel-titel, .tz { animation: schreiben .9s cubic-bezier(.22, 1, .36, 1) backwards; animation-delay: calc(.2s + var(--i, 0) * .16s); }
+    @keyframes schreiben { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+  }
+
+  @media (max-width: 899px) and (max-height: 760px) {
+    .kopf { min-height: 52px; }
+    .held-raster { gap: 16px; padding-top: 0; }
+    .tafel { padding: 10px 14px 14px; }
+    .tafel-titel { font-size: 1.25rem; margin-bottom: 0; }
+    .tz { min-height: 36px; padding: 2px 8px; font-size: 1.0625rem; }
+    .tafel-halter { padding-bottom: 10px; }
+    .tafel-tipp { margin-top: 8px; font-size: .875rem; }
+    .held-text h1 { font-size: 2.125rem; }
+    .held-text .lead { margin-top: 10px; font-size: 1rem; }
+    .held-aktion { margin-top: 16px; }
+  }
+  @media (max-width: 359px) and (max-height: 700px) { .tafel-tipp { display: none; } }
+  @media (min-width: 900px) {
+    .held-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 64px; padding-top: 40px; }
+    .held-text { order: -1; }
+    .rahmen, .ablage, .stift { transform: rotate(1.2deg); }
+    .tafel { padding: 22px 28px 30px; }
+    .tafel-titel { font-size: 1.85rem; }
+  }
+
+  /* ---------- Abschnitte: Tafel → App ---------- */
+  .zeile { padding: clamp(72px, 11vw, 136px) 0; position: relative; isolation: isolate; }
+  .zeile:nth-of-type(odd) { background: var(--grund-2); }
+  .zeile-raster { display: grid; gap: 40px; }
+  .zeile h2 {
+    font-size: clamp(2rem, 1.35rem + 2.8vw, 3.25rem);
+    line-height: 1.05;
+    letter-spacing: -.03em;
+    font-weight: 700;
+    text-wrap: balance;
+  }
+  .zeile .text > p { margin-top: 18px; max-width: 36em; color: var(--tinte-2); font-size: 1.0625em; text-wrap: pretty; }
+  .fakten { list-style: none; margin: 26px 0 0; padding: 0; max-width: 36em; }
+  .fakten li { display: flex; gap: 12px; padding: 12px 0; border-top: 1px solid var(--linie); color: var(--tinte); }
+  .fakten li:last-child { border-bottom: 1px solid var(--linie); }
+  .fakten .ico { color: var(--gruen); margin-top: .28em; }
+  @media (min-width: 900px) {
+    .zeile-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+    .zeile:nth-of-type(odd) .beleg { order: -1; }
+  }
+
+  .beleg { display: grid; justify-items: center; }
+  .notiz {
+    justify-self: start;
+    margin-left: 4%;
+    padding: 8px 16px 9px;
+    border-radius: 4px;
+    background: var(--tafel);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .14), 0 10px 22px -14px rgba(0, 0, 0, .5);
+    border-top: 4px solid #c3c9c1;
+    font: 1.35rem/1.2 var(--hand);
+    color: var(--stift-schwarz);
+    transform: rotate(-2deg);
+  }
+  .pfeil { width: 74px; height: 54px; justify-self: start; margin: 2px 0 -6px 18%; color: var(--tinte-2); opacity: .8; }
+
+  /* ---------- App-Ausschnitte (im Stil der echten App, die nur hell kennt) ---------- */
+  .app {
+    width: 100%; max-width: 380px; margin: 0;
+    padding: 14px;
+    border-radius: 26px;
+    background: #f0f7f0;
+    color: #1a2e1a;
+    font-size: 15px; line-height: 1.35;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid rgba(61, 158, 61, .18);
+    box-shadow: 0 34px 60px -30px rgba(20, 60, 20, .45), 0 2px 8px rgba(20, 60, 20, .08);
+  }
+  @media (prefers-color-scheme: dark) { .app { box-shadow: 0 18px 32px -22px rgba(0, 0, 0, .45), 0 0 0 1px rgba(255, 255, 255, .06); } }
+  .app small { font-size: 12.5px; color: #557355; }
+  .app-leiste { display: flex; align-items: center; gap: 8px; padding: 2px 4px 12px; font-weight: 700; font-size: 16px; }
+  .app-leiste svg { width: 24px; height: 24px; border-radius: 6px; }
+  .app-leiste span { margin-left: auto; font-weight: 600; font-size: 12.5px; color: #557355; }
+  .app-karte { background: #fff; border-radius: 16px; padding: 16px; border: 1px solid rgba(61, 158, 61, .14); }
+  .app-karte + .app-karte { margin-top: 10px; }
+  .app .ico { stroke-width: 2.2; }
+
+  .rg-stand { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; padding: 0 4px 12px; }
+  .rg-stand b { display: block; font-size: 14px; }
+  .rg-balken { margin-top: 6px; width: 150px; height: 6px; border-radius: 3px; background: rgba(61, 158, 61, .15); overflow: hidden; }
+  .rg-balken i { display: block; height: 100%; width: 21%; border-radius: inherit; background: #3d9e3d; }
+  .rg-stand div:last-child { text-align: right; }
+  .rg-stand div:last-child b { font-size: 20px; color: #2e7b2e; }
+  .rg-kopf { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; margin-bottom: 14px; }
+  .rg-kopf b { font-size: 20px; letter-spacing: -.01em; }
+  .rg-kopf small { display: block; margin-top: 2px; }
+  .rg-box { background: #e8f5e8; border-radius: 10px; padding: 6px 12px; font-weight: 700; font-size: 16px; }
+  .rg-empf { text-align: center; padding: 14px; border-radius: 10px; background: rgba(61, 158, 61, .12); border: 1px solid rgba(61, 158, 61, .25); }
+  .rg-wert { display: block; font-size: 30px; font-weight: 800; color: #2e7b2e; line-height: 1; letter-spacing: -.02em; }
+  .rg-empf small { display: inline-flex; gap: 5px; align-items: center; margin-top: 8px; text-transform: uppercase; letter-spacing: .05em; font-size: 11.5px; }
+  .rg-feld { margin-top: 12px; }
+  .rg-feld div { margin-top: 4px; min-height: 48px; display: grid; place-items: center; border-radius: 10px; background: #f4fbf4; border: 1px solid rgba(61, 158, 61, .3); font-size: 22px; font-weight: 600; }
+  .rg-vorher { display: block; text-align: center; margin-top: 6px; }
+  .rg-knoepfe { display: flex; gap: 8px; margin-top: 14px; }
+  .rg-knoepfe span { flex: 1; min-height: 50px; display: grid; place-items: center; border-radius: 10px; font-weight: 600; font-size: 14.5px; border: 1px solid rgba(61, 158, 61, .3); color: #2e7b2e; background: #fff; }
+  .rg-knoepfe span + span { flex: 2; background: #2e7b2e; border-color: #2e7b2e; color: #fff; }
+  .rg-halten { display: block; text-align: right; margin-top: 6px; }
+
+  .ab-titel { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; padding-bottom: 6px; }
+  .ab-titel .ico { color: #3d9e3d; }
+  .ab-kalb { display: flex; gap: 10px; padding: 12px 0; border-top: 1px solid rgba(61, 158, 61, .1); }
+  .ab-kalb > i { width: 9px; height: 9px; border-radius: 50%; margin-top: 6px; flex: none; background: #2d8a2d; }
+  .ab-kalb > i.paar { background: #d4941a; }
+  .ab-kalb b { display: block; font-size: 15px; }
+  .ab-grund { display: flex; gap: 6px; margin-top: 3px; font-size: 13.5px; color: #9a5f0c; }
+  .ab-grund .ico { margin-top: .2em; }
+  .ab-grund.krank { color: #b8352a; }
+  .ab-grund em { font-style: normal; color: #557355; white-space: nowrap; }
+
+  .push {
+    display: grid; grid-template-columns: 38px 1fr; gap: 12px;
+    padding: 14px 16px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, .82);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    backdrop-filter: blur(20px) saturate(1.6);
+    box-shadow: 0 12px 30px -14px rgba(20, 60, 20, .45);
+  }
+  .push svg { width: 38px; height: 38px; border-radius: 9px; }
+  .push-kopf { display: flex; justify-content: space-between; gap: 8px; }
+  .push-kopf b { font-size: 14.5px; }
+  .push p { margin-top: 1px; font-size: 14.5px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .push p b { display: block; }
+  .kal-titel { display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 15px; }
+  .kal-titel .ico { color: #3d9e3d; }
+  .kal-tag { display: grid; grid-template-columns: 52px 1fr; gap: 10px; align-items: center; padding: 12px 0 2px; }
+  .kal-tag > span { display: grid; place-items: center; height: 52px; border-radius: 12px; background: #e8f5e8; font-weight: 700; font-size: 13px; line-height: 1.1; text-align: center; color: #2e7b2e; }
+  .kal-tag b { display: block; font-size: 14.5px; }
+
+  .bz-titel { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .bz-titel b { font-size: 18px; letter-spacing: -.01em; }
+  .bz-zeile { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-top: 1px solid rgba(61, 158, 61, .1); font-size: 14.5px; }
+  .bz-zeile b { font-size: 15.5px; }
+  .bz-zeile small { display: block; }
+  .beispiel { display: inline-block; padding: 3px 8px; border-radius: 999px; background: #fbf2df; color: #7a4c0a; font-size: 11.5px; font-weight: 700; letter-spacing: .02em; }
+
+  .ex-text { margin-top: 8px; font-size: 14px; color: #3f5c3f; }
+  .ex-text code { font: 600 13px ui-monospace, "SF Mono", Menlo, monospace; }
+  .ex-knopf { margin-top: 14px; min-height: 48px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(61, 158, 61, .3); color: #2e7b2e; font-weight: 600; font-size: 14.5px; }
+
+  /* ---------- Kontakt ---------- */
+  .kontakt {
+    background: var(--stall); color: #fff;
+    padding: clamp(80px, 12vw, 144px) 0 calc(clamp(80px, 12vw, 144px) + env(safe-area-inset-bottom));
+  }
+  .kontakt-raster { display: grid; gap: 40px; }
+  .kontakt h2 { font-size: clamp(2.25rem, 1.4rem + 3.6vw, 4rem); line-height: 1.02; letter-spacing: -.035em; font-weight: 700; text-wrap: balance; }
+  .kontakt .lead { margin-top: 18px; color: var(--auf-stall-2); font-size: clamp(1.0625rem, 1rem + .4vw, 1.3125rem); max-width: 30em; text-wrap: pretty; }
+  .wege { display: grid; gap: 10px; align-content: start; }
+  .wege a, .wege button {
+    display: flex; align-items: center; gap: 14px;
+    min-height: 60px; padding: 0 20px;
+    border-radius: 16px; border: 0;
+    background: rgba(255, 255, 255, .1);
+    color: #fff; text-decoration: none; text-align: left;
+    font: 600 1.0625rem/1.2 var(--sans);
+    cursor: pointer;
+    transition: background-color .2s;
+  }
+  .wege a:hover, .wege button:hover { background: rgba(255, 255, 255, .17); }
+  .wege a:first-child { background: #fff; color: #1f4d24; }
+  .wege .ico { width: 22px; height: 22px; }
+  .wege small { display: block; margin-top: 3px; font-weight: 400; font-size: .875rem; opacity: .8; }
+  .absender { margin-top: 32px; color: var(--auf-stall-2); font-size: .9375rem; }
+  .absender a { color: #fff; }
+  .platzhalter { outline: 2px dashed #f2c94c; outline-offset: 2px; border-radius: 3px; }
+  @media (min-width: 900px) { .kontakt-raster { grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: center; } }
+
+  .fuss { padding: 28px 0 calc(28px + env(safe-area-inset-bottom)); color: var(--tinte-2); font-size: .875rem; }
+  .fuss .huelle { display: flex; flex-wrap: wrap; gap: 8px 24px; justify-content: space-between; }
+
+  /* ---------- Schwebender Knopf (nur schmal) ---------- */
+  .schwebe {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 5;
+    padding: 28px 16px calc(14px + env(safe-area-inset-bottom));
+    background: linear-gradient(transparent, var(--grund) 45%);
+    pointer-events: none;
+    transform: translateY(110%);
+    transition: transform .45s cubic-bezier(.22, 1, .36, 1);
+  }
+  .schwebe .knopf { pointer-events: auto; width: 100%; box-shadow: 0 12px 30px -10px rgba(0, 0, 0, .5); }
+  .schwebe.sichtbar { transform: none; }
+  @media (min-width: 900px) { .schwebe { display: none; } }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="kmGruen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#57b455"/><stop offset="1" stop-color="#2b6f2e"/></linearGradient>
+    <linearGradient id="kmAus" gradientUnits="userSpaceOnUse" x1="0" y1="300" x2="0" y2="385"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+    <mask id="kmHals" maskUnits="userSpaceOnUse" x="-20" y="-20" width="460" height="420"><rect x="-20" y="-20" width="460" height="420" fill="url(#kmAus)"/></mask>
+    <symbol id="logo" viewBox="0 0 512 512"><rect width="512" height="512" rx="116" fill="url(#kmGruen)"/><g transform="translate(48.1 75.82) scale(.99)"><path fill="#fff" stroke="#fff" stroke-width="2.5" stroke-linejoin="round" mask="url(#kmHals)" d="M200 382C195 381 190 381 189 380C188 380 188 380 187 378C187 374 185 364 185 358C184 347 185 332 187 325C188 324 188 323 188 323C188 323 187 322 185 322C180 320 175 317 170 312L166 309L164 309C159 309 151 307 146 304C140 301 136 296 136 290C135 286 136 282 139 271C140 265 141 260 141 259C141 259 141 257 140 255C132 241 127 223 124 206C123 196 122 190 122 179L122 168L121 165C116 156 115 144 117 137C118 136 118 135 118 135C118 135 116 135 114 135C109 136 108 136 107 135C107 134 109 133 112 131L113 130L112 130C109 130 102 133 98 135C88 140 87 140 85 141C81 142 78 142 73 142C58 140 46 135 30 122C26 119 16 109 12 104C8 99 3 92 1 88C0 85 0 85 0 82C0 78 1 76 3 72C12 61 34 52 56 52C70 52 80 56 92 64C107 75 113 77 121 72C124 70 134 62 134 62C133 62 132 61 130 61C123 59 117 55 112 51C105 46 99 36 97 28C95 21 96 12 99 10C102 9 103 10 104 16C107 26 113 32 122 37C126 39 130 40 135 40C139 40 143 39 142 39C142 39 141 39 139 38C130 36 121 31 114 25C110 21 106 17 106 17C106 16 107 17 108 18C117 24 128 29 138 31L141 31L143 30C151 25 161 22 170 21C175 21 182 21 185 22C185 22 186 22 186 22C187 21 186 20 184 19C180 16 176 14 168 12C166 12 165 12 165 11C165 11 168 10 171 9C176 8 179 7 187 7C193 7 195 7 199 7C201 8 205 9 206 9C210 11 216 13 218 15C219 16 220 17 220 17C220 16 220 15 220 13C220 8 220 6 218 3C215 -1 216 -1 221 2C225 4 230 7 232 10C234 13 236 17 236 18C236 19 237 20 238 20C240 20 241 18 242 15C243 13 244 12 244 12C244 12 245 13 246 13C248 15 249 19 250 26C250 27 250 27 252 28C253 28 258 28 263 28C271 28 273 28 276 27C286 25 296 21 306 15C312 11 312 10 314 10C319 10 321 15 320 20C319 27 315 34 307 42C300 49 292 55 282 60L279 62L280 64C281 65 281 66 282 66C284 67 287 69 291 72C295 75 297 76 300 76C306 77 314 73 326 64C335 57 343 54 355 53C360 52 370 52 376 53C384 54 393 57 401 60C408 64 415 70 418 75C420 80 420 84 417 89C410 103 393 121 377 131C364 139 353 142 339 142C335 142 332 141 330 141C327 140 323 138 321 137C318 135 315 134 308 132C302 130 299 130 299 130C299 131 300 132 302 134C304 136 305 137 304 137C303 137 292 135 292 135C291 135 291 135 292 136C294 139 294 143 295 148C295 150 295 152 295 152C295 152 296 153 297 153C307 160 321 170 329 175C351 193 371 214 379 229C383 237 385 246 385 256C385 263 384 269 382 270C381 270 378 262 375 253C371 241 369 236 366 231C363 226 359 219 356 216L353 214L356 220C361 230 364 239 366 250C366 254 366 262 366 263C366 263 366 263 365 262C364 260 362 256 359 247C355 236 354 233 351 227C346 218 341 211 337 209C335 208 334 208 333 209C332 211 334 218 338 232C342 245 343 248 344 258C345 264 345 279 345 285L344 289L342 293C341 295 338 300 336 304C329 317 322 326 315 335C311 340 308 344 307 344C306 344 307 342 309 336C313 327 314 320 314 310C314 304 314 303 313 301C312 299 312 299 311 300C310 301 309 305 308 310C304 323 301 330 294 339C292 343 290 345 287 349C282 353 280 355 277 356C276 356 276 356 276 355C275 355 275 354 275 353C274 352 274 350 274 349C273 343 270 343 266 350C263 355 261 362 261 367L261 371L258 373C254 375 248 377 245 377C244 377 244 377 244 376C244 376 244 373 246 371C251 361 254 350 258 333C259 328 262 311 262 310C262 310 263 309 264 307C269 302 271 299 272 294C273 291 273 290 273 280L273 269L274 267C276 263 279 256 280 250C282 245 284 233 284 233C284 233 283 236 282 240C279 253 274 265 271 270L270 272L271 275C273 286 272 295 268 300C264 304 258 308 251 309C249 309 248 309 247 309C247 309 246 310 246 313C244 320 241 335 238 344C235 352 231 360 229 363C227 364 225 366 224 366C221 366 217 360 214 353C212 347 210 337 209 326L209 324L204 324L200 324L200 325C201 327 203 339 204 346C206 363 208 380 207 381C206 382 205 382 200 382L200 382M211 314C217 313 223 311 225 309C227 307 227 307 223 306C218 305 213 304 202 304C194 304 191 305 188 305C183 306 179 307 179 308C179 308 180 309 182 310C186 312 190 313 194 314C198 314 208 314 211 314L211 314M173 299C175 299 178 298 181 298C190 296 194 296 203 296C210 296 213 296 222 297C231 298 235 298 241 298C248 298 249 298 252 298C259 296 263 292 263 286C263 283 263 282 260 269C258 258 257 252 255 242C255 238 254 234 254 233C252 231 250 229 244 225C236 219 233 215 231 210C231 206 231 188 232 180C235 154 238 138 243 126C245 118 247 113 251 108C255 102 259 98 266 95C270 94 272 91 274 89C275 85 275 78 273 67C271 59 270 56 267 54C266 52 264 51 259 50C255 48 255 48 248 42C242 38 238 35 237 36C237 36 238 38 238 40C239 47 240 55 238 55C237 55 225 44 221 38L219 35L218 38C217 42 216 46 213 51C210 57 207 61 203 66C199 69 195 73 194 72C194 72 195 70 196 68C201 56 203 48 205 38C205 36 205 34 205 34C205 33 203 35 201 38C196 42 192 46 186 50C181 53 175 57 174 57C173 57 173 56 174 55C175 54 176 52 177 50C180 47 182 44 182 42C183 40 183 40 177 41C175 42 172 43 170 43C165 44 162 46 156 52C151 56 150 57 146 58C142 59 141 60 141 62C141 63 140 65 138 67C137 68 136 70 135 71C134 73 134 76 135 76C135 76 136 75 137 75C141 73 145 72 146 74C146 74 145 76 144 77C139 84 136 94 138 97C139 98 139 99 144 101C150 103 154 106 156 110C157 112 158 116 159 123C160 131 161 134 165 142C167 146 169 151 170 152C172 159 172 167 172 181C172 196 170 209 168 216C166 221 164 224 158 228C156 230 154 233 153 235C153 236 153 239 152 242C151 250 149 259 144 281C143 284 143 289 144 291C147 299 158 302 173 299L173 299M168 290C166 290 165 288 165 286C165 284 166 282 169 279C171 276 172 276 171 276C170 276 168 273 166 271C165 269 163 263 161 258C160 254 160 254 160 249C160 245 160 245 161 243C162 240 164 238 166 237C171 234 177 234 198 233C215 233 230 234 235 235C241 236 245 239 246 244C247 248 246 252 242 261C240 266 239 269 237 271C234 275 229 275 225 271C222 268 221 265 222 259L222 257L221 258C218 261 218 266 219 269C221 273 225 275 230 276C232 276 232 277 234 279C238 282 239 286 238 288C236 290 233 290 222 289C217 289 212 289 204 289C195 289 193 289 186 290C176 291 170 291 168 290L168 290M184 276C186 275 187 274 188 272C189 270 188 264 188 264C187 264 187 265 187 266C187 270 185 273 181 275C180 276 179 277 179 277C179 277 182 277 184 276L184 276M205 259C212 258 217 256 226 251C230 249 234 247 235 247C236 246 238 246 238 245C238 245 237 244 236 243C235 243 231 244 226 244C215 246 212 246 204 246C196 246 192 246 181 244C174 243 172 243 170 243C169 244 167 246 167 246C168 246 171 248 174 249C188 256 190 257 193 258C195 259 197 259 199 259C200 260 202 260 202 260C202 260 203 260 205 259L205 259M301 278C305 260 307 246 307 227C307 213 307 206 304 192C302 180 300 174 298 170C295 166 292 163 291 164C291 164 291 171 291 179C291 187 290 194 290 197L290 201L291 204C298 219 301 243 300 267C300 273 299 279 299 281C298 287 299 287 301 278L301 278M268 254C274 243 278 229 281 211C281 206 283 190 283 189C283 188 283 189 282 195C280 202 276 212 274 219C271 224 266 234 264 238L262 241L263 244C264 251 266 258 266 258C266 258 267 256 268 254L268 254M146 238L146 234L144 229C139 218 135 208 130 188C129 185 129 182 129 182C129 182 129 187 130 197C131 206 134 218 136 226C139 233 144 244 144 243C145 243 145 241 146 238L146 238M260 161C261 160 262 159 263 159C264 158 265 158 266 158C267 159 269 159 270 159C275 160 278 160 282 157C283 155 286 151 286 150C286 149 286 150 285 151C283 152 281 153 278 153C277 153 275 152 272 152C267 151 265 151 263 152C260 154 258 157 258 163C257 168 257 169 258 166C259 164 260 162 260 161L260 161M152 164C152 161 151 157 150 155C149 154 147 152 146 151C144 151 142 151 137 152C131 153 128 153 125 150C123 149 123 150 125 152C127 157 131 159 135 160C137 160 139 160 142 159L145 158L147 159C149 160 151 162 152 165C152 166 152 167 152 167C152 166 152 165 152 164L152 164M265 136C267 134 271 130 274 129C278 127 283 127 288 129C292 131 293 131 290 127C287 122 282 119 277 120C270 121 265 128 262 140C260 145 260 146 262 142C263 140 264 138 265 136M149 143C148 141 147 134 145 132C143 127 140 123 136 121C134 120 134 120 131 120C128 120 127 120 126 121C123 123 118 128 118 129C118 130 119 130 122 129C125 128 126 127 128 127C136 127 143 133 148 142C148 144 149 145 149 145C149 145 149 144 149 143L149 143M284 136C285 134 285 132 284 131C283 130 281 130 279 131C279 132 278 132 279 133C279 135 281 137 282 137C283 137 283 136 284 136L284 136M130 136C132 134 132 130 129 130C127 130 125 132 126 134C126 137 129 137 130 136L130 136M279 38C286 37 293 34 298 30C301 28 307 23 307 22C308 21 308 21 304 24C295 29 286 33 276 35C271 35 261 35 256 35C254 35 253 35 253 35C254 36 261 38 265 39C268 39 276 39 279 38L279 38"/></g></symbol>
+    <symbol id="pfeil" viewBox="0 0 74 54"><path d="M8 4c4 22 20 38 52 42" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M50 37l11 9-13 4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+    <symbol id="i-health" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></symbol>
+    <symbol id="i-bottle" viewBox="0 0 24 24"><path d="M9 2h6"/><path d="M10 2v3.5L8 9v10a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V9l-2-3.5V2"/><line x1="10" y1="13" x2="14" y2="13"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M9 11V5.5a1.5 1.5 0 0 1 3 0V10"/><path d="M12 9.5a1.5 1.5 0 0 1 3 0V11"/><path d="M15 10.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5.2-3l-2.1-3.6a1.5 1.5 0 0 1 2.6-1.5L9 15"/></symbol>
+  </defs>
+</svg>
+
+<header class="held">
+  <div class="huelle">
+    <div class="kopf">
+      <a class="marke" href="#"><svg aria-hidden="true"><use href="#logo"/></svg>Kälber Management</a>
+      <a class="kopf-link" href="#kontakt">Kontakt</a>
+    </div>
+
+    <div class="held-raster">
+      <div class="tafel-ort">
+        <div class="tafel-halter">
+        <nav class="rahmen" aria-label="Stalltafel – jede Zeile führt zu ihrer Stelle in der App">
+          <div class="tafel">
+            <p class="tafel-titel" style="--i:0"><span>Kälberstall</span><small>Donnerstag</small></p>
+            <ul>
+              <li><a class="tz" href="#rundgang" style="--i:1;--r:-.6deg"><b>Box 3</b><span>0815 Lotte · 6 → 7&nbsp;L</span></a></li>
+              <li><a class="tz rot" href="#beobachten" style="--i:2;--r:.5deg"><b>Box 4</b><span class="kreis">1123 trinkt schlecht!!</span></a></li>
+              <li><span class="tz" style="--i:3;--r:-.3deg"><b>Box 7</b><del>0977 Elektrolyt</del></span></li>
+              <li><a class="tz blau" href="#erinnern" style="--i:4;--r:.4deg"><b>heute</b><span>2342 + 2350 zusammen</span></a></li>
+              <li><a class="tz blau" href="#erinnern" style="--i:5;--r:-.5deg"><b>Fr.</b><span>0612 absetzen?</span></a></li>
+              <li><a class="tz gruen" href="#bilanz" style="--i:6;--r:.3deg"><b>MAT</b><span>12&nbsp;kg – was kostet das?</span></a></li>
+            </ul>
+          </div>
+        </nav>
+        <div class="ablage" aria-hidden="true"></div>
+        <div class="stift" aria-hidden="true"></div>
+        </div>
+        <p class="tafel-tipp"><svg class="ico" aria-hidden="true"><use href="#i-hand"/></svg>Tipp auf eine Zeile: so steht sie in der App.</p>
+      </div>
+
+      <div class="held-text">
+        <h1>Die Stalltafel, die mitrechnet.</h1>
+        <p class="lead">Kälber Management übernimmt, was heute an der Tafel steht, und rechnet für jedes Kalb weiter: wie viel es bekommt, ob es schlechter trinkt, was als Nächstes ansteht.</p>
+        <div class="held-aktion">
+          <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
+          <small>Läuft auf deinem Hof. Die Daten bleiben bei dir.</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="zeile" id="rundgang" aria-labelledby="h-rundgang">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-rundgang">Der Rundgang sagt dir die Menge.</h2>
+        <p>Box für Box, in deiner Reihenfolge, für Milch und Kraftfutter. Die Empfehlung folgt der Tränkekurve und dem, was das Kalb zuletzt wirklich getrunken hat.</p>
+        <ul class="fakten">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Höchstens ein Liter mehr als am Vortag</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Eine Gruppentränke zählt als eine Einheit</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>„Weiter“ drei Sekunden halten: alle übrigen Kälber bekommen ihre Empfehlung</li>
+        </ul>
+      </div>
+      <div class="beleg">
+        <p class="notiz">0815 Lotte · 6 → 7&nbsp;L</p>
+        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
+        <figure class="app" role="img" aria-label="App-Ausschnitt Milch-Rundgang: Kalb 3 von 14, 0815 Lotte in Box 3, Empfehlung morgens 3,5 Liter, vorherige Mahlzeit 3,0 Liter getrunken.">
+          <div class="app-leiste"><svg><use href="#logo"/></svg>Milch<span>Rundgang</span></div>
+          <div class="rg-stand">
+            <div><b>Kalb 3 von 14</b><div class="rg-balken"><i></i></div></div>
+            <div><b>3/14</b><small>∑ 41,5&nbsp;L Vollmilch</small></div>
+          </div>
+          <div class="app-karte">
+            <div class="rg-kopf"><div><b>0815</b> Lotte<small>23 Tage · Einzelhaltung</small></div><span class="rg-box">Box 3</span></div>
+            <div class="rg-empf"><span class="rg-wert">3,5&nbsp;L</span><small><svg class="ico"><use href="#i-sun"/></svg>Morgens · Empfehlung</small></div>
+            <div class="rg-feld"><small>Gegeben (L)</small><div>3,5</div></div>
+            <small class="rg-vorher">Vorherige Mahlzeit getrunken: 3,0&nbsp;L</small>
+            <div class="rg-knoepfe"><span>← Zurück</span><span>Speichern &amp; Weiter →</span></div>
+            <small class="rg-halten">3 Sek. halten: alle restlichen Kälber mit Empfehlung</small>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="zeile" id="beobachten" aria-labelledby="h-beobachten">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-beobachten">Wer schlechter trinkt, steht morgens oben.</h2>
+        <p>Die Übersicht zeigt nur den heutigen Tag. Unter „Heute beobachten“ stehen Kälber mit Trinkrückgang, Kälber, die über Tage weniger trinken als Gleichaltrige, und Kälber in Behandlung.</p>
+        <ul class="fakten">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Jedes Kalb gegen seine letzte Mahlzeit und gegen Gleichaltrige auf derselben Tränkekurve</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Behandlungspläne mit allen Gaben, bis drei Tage nach der letzten im Blick</li>
+        </ul>
+      </div>
+      <div class="beleg">
+        <p class="notiz rot">1123 trinkt schlecht!!</p>
+        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
+        <figure class="app" role="img" aria-label="App-Ausschnitt Übersicht, Heute beobachten: 1123 in Box 4 hat 35 Prozent weniger getrunken; 2350 in Box 9 trinkt seit 3 Tagen weniger als Gleichaltrige; 0977 Fritz in Box 7 hat Durchfall, Elektrolyt.">
+          <div class="app-leiste"><svg><use href="#logo"/></svg>Übersicht</div>
+          <div class="app-karte">
+            <div class="ab-titel"><svg class="ico"><use href="#i-health"/></svg>Heute beobachten</div>
+            <div class="ab-kalb"><i></i><div><b>1123 · Box 4</b><div class="ab-grund"><svg class="ico"><use href="#i-bottle"/></svg><span>35&nbsp;% weniger getrunken (2,6 statt 4,0&nbsp;L) <em>· 05.11.</em></span></div></div></div>
+            <div class="ab-kalb"><i class="paar"></i><div><b>2350 · Box 9</b><div class="ab-grund"><svg class="ico"><use href="#i-bottle"/></svg><span>trinkt seit 3 Tagen weniger als Gleichaltrige (Ø 2,1 statt 2,9&nbsp;L je Mahlzeit)</span></div></div></div>
+            <div class="ab-kalb"><i></i><div><b>0977 Fritz · Box 7</b><div class="ab-grund krank"><svg class="ico"><use href="#i-health"/></svg><span>Durchfall — Elektrolyt <em>· 04.11.</em></span></div></div></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="zeile" id="erinnern" aria-labelledby="h-erinnern">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-erinnern">Was ansteht, meldet sich von selbst.</h2>
+        <p>Jeden Morgen legt die App die To-dos des Tages an, nach Alter, Gewicht oder gefressenem Kraftfutter, und schickt sie dir als Mitteilung aufs Handy. Im Kalender siehst du, was in den nächsten Tagen kommt.</p>
+        <ul class="fakten">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Uhrzeit frei wählbar, Standard 6:00 Uhr</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Umstallen mit einem Tipp, auch rückwirkend</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Im Urlaub pausieren die Mitteilungen nur auf deinem Handy, die Vertretung bekommt sie weiter</li>
+        </ul>
+      </div>
+      <div class="beleg">
+        <p class="notiz blau">Fr. 0612 absetzen?</p>
+        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
+        <figure class="app" role="img" aria-label="App-Ausschnitt: Mitteilung um 6:00 Uhr, 2 offene To-dos, 2342 und 2350 mit anderem Kalb zusammenlegen. Kalender: Freitag, 0612 Kalb absetzen.">
+          <div class="push">
+            <svg><use href="#logo"/></svg>
+            <div>
+              <div class="push-kopf"><b>Kälber Management</b><small>6:00</small></div>
+              <p><b>2 offene To-dos</b>2342: Mit anderem Kalb zusammenlegen (Paarhaltung), 2350: Mit anderem Kalb zusammenlegen (Paarhaltung)</p>
+            </div>
+          </div>
+          <div class="app-karte" style="margin-top:12px">
+            <div class="kal-titel"><svg class="ico"><use href="#i-calendar"/></svg>Kalender</div>
+            <div class="kal-tag"><span>Fr</span><div><b>0612: Kalb absetzen</b><small>Ende der Milchphase erreicht</small></div></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="zeile" id="bilanz" aria-labelledby="h-bilanz">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-bilanz">Was die Kälber kosten, steht in der Bilanz.</h2>
+        <p>Milch, MAT und Kraftfutter werden zusammengerechnet, jeder Tag mit dem Preis, der damals galt. Den Milchpreis holt die App jeden Monat selbst: Bioland oder ife-Rohstoffwert.</p>
+        <ul class="fakten">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Jahr wählen, darunter einzelne Monate</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Geburten, Abgänge, Tageszunahme, Krankheiten, erledigte To-dos</li>
+        </ul>
+      </div>
+      <div class="beleg">
+        <p class="notiz gruen">MAT 12&nbsp;kg – was kostet das?</p>
+        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
+        <figure class="app" role="img" aria-label="App-Ausschnitt Bilanz Oktober 2026 mit Beispielzahlen: 9 Geburten, Futterkosten 1.284 Euro, durchschnittliche Tageszunahme 0,82 Kilogramm, Milchpreis Bioland 0,66 Euro je Liter.">
+          <div class="app-leiste"><svg><use href="#logo"/></svg>Bilanz<span class="beispiel">Beispielzahlen</span></div>
+          <div class="app-karte">
+            <div class="bz-titel"><b>Oktober 2026</b><small>Monat</small></div>
+            <div class="bz-zeile"><span>Geburten</span><b>9</b></div>
+            <div class="bz-zeile"><span>Futterkosten<small>Milch, MAT, Kraftfutter</small></span><b>1.284&nbsp;€</b></div>
+            <div class="bz-zeile"><span>Ø Tageszunahme</span><b>0,82&nbsp;kg</b></div>
+            <div class="bz-zeile"><span>Milchpreis<small>Bioland, automatisch</small></span><b>0,66&nbsp;€/L</b></div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="zeile" id="hof" aria-labelledby="h-hof">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-hof">Läuft auf deinem Hof.<br> Die Daten bleiben dort.</h2>
+        <p>Kälber Management läuft auf einem Raspberry Pi, einem Windows-PC oder in Docker, bei dir und nicht in einer fremden Cloud. Im Stall öffnest du es am Handy im Browser oder als App auf dem Home-Bildschirm, auf Wunsch auch sicher von unterwegs.</p>
+        <ul class="fakten">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Ein kleiner Rechner im Büro oder Stall reicht</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Eigenes Passwort, verschlüsselte Verbindung</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>Alle Daten in einer Datei, die Sicherung ist ein Knopfdruck</li>
+        </ul>
+      </div>
+      <div class="beleg">
+        <p class="notiz">Backup → USB-Stick!</p>
+        <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
+        <figure class="app" role="img" aria-label="App-Ausschnitt Einstellungen: Datenbank exportieren. Lade die aktuelle Kälber-Datenbank kaelber.db als Backup herunter.">
+          <div class="app-leiste"><svg><use href="#logo"/></svg>Einstellungen<span>Allgemein</span></div>
+          <div class="app-karte">
+            <div class="kal-titel"><svg class="ico"><use href="#i-download"/></svg>Datenbank exportieren</div>
+            <p class="ex-text">Lade die aktuelle Kälber-Datenbank (<code>kaelber.db</code>) als Backup herunter, um deine Daten lokal zu sichern.</p>
+            <div class="ex-knopf">Datenbank exportieren</div>
+          </div>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="kontakt" id="kontakt" aria-labelledby="h-kontakt">
+    <div class="huelle kontakt-raster">
+      <div>
+        <h2 id="h-kontakt">Lass dir die App zeigen.</h2>
+        <p class="lead">Melde dich bei uns. Wir zeigen dir Kälber Management am Handy und richten es mit dir auf deinem Hof ein.</p>
+        <p class="absender">Ein Angebot vom Hof Schumacher · <span class="platzhalter">Ansprechpartner</span><br>
+          Vorab stöbern: <a href="anleitung.html">Bedienungsanleitung</a></p>
+      </div>
+      <div class="wege">
+                <a href="tel:+32493458722"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg><span>Anrufen<small>+32 493 45 87 22</small></span></a>
+        <a href="https://wa.me/32493458722"><svg class="ico" aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp schreiben<small>+32 493 45 87 22</small></span></a>
+        <a href="mailto:info@kalb-management.de?subject=K%C3%A4lber%20Management%20%E2%80%93%20Vorf%C3%BChrung"><svg class="ico" aria-hidden="true"><use href="#i-mail"/></svg><span>E-Mail schreiben<small>info@kalb-management.de</small></span></a>
+        <button type="button" id="vcard" hidden><svg class="ico" aria-hidden="true"><use href="#i-user"/></svg><span>Kontakt speichern<small>Für später, direkt ins Adressbuch</small></span></button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="fuss">
+  <div class="huelle">
+    <span>Kälber Management · ein Angebot vom Hof Schumacher</span>
+    <span>Impressum: Hof Schumacher, Hochstraße 270A, 4701 Kettenis, Belgien</span>
+  </div>
+</footer>
+
+<div class="schwebe" id="schwebe" aria-hidden="true"><a class="knopf" href="#kontakt" tabindex="-1">Vorführung anfragen</a></div>
+
+<script>
+  // Schwebender Knopf: nur zwischen Held und Kontaktbereich
+  (function () {
+    var schwebe = document.getElementById('schwebe');
+    if (!('IntersectionObserver' in window)) return;
+    var obenSichtbar = true, kontaktSichtbar = false;
+    function setzen() {
+      var an = !obenSichtbar && !kontaktSichtbar;
+      schwebe.classList.toggle('sichtbar', an);
+      schwebe.setAttribute('aria-hidden', String(!an));
+      schwebe.firstElementChild.tabIndex = an ? 0 : -1;
+    }
+    // den ganzen Kopfbereich beobachten: er ist beim Öffnen immer sichtbar, auch Sprünge über ihn hinweg melden sich
+    new IntersectionObserver(function (e) { obenSichtbar = e[0].isIntersecting; setzen(); })
+      .observe(document.querySelector('.held'));
+    new IntersectionObserver(function (e) { kontaktSichtbar = e[0].isIntersecting; setzen(); }, { rootMargin: '0px 0px -30% 0px' })
+      .observe(document.getElementById('kontakt'));
+  })();
+
+  // „Kontakt speichern“: vCard aus den Links oben, damit die Daten nur an einer Stelle stehen
+  (function () {
+    var knopf = document.getElementById('vcard');
+    var tel = document.querySelector('.wege a[href^="tel:"]');
+    var mail = document.querySelector('.wege a[href^="mailto:"]');
+    if (!knopf || !window.Blob || !window.URL) return;
+    knopf.hidden = false;
+    knopf.addEventListener('click', function () {
+      var karte = [
+        'BEGIN:VCARD', 'VERSION:3.0',
+        'FN:Kälber Management (Hof Schumacher)', 'ORG:Hof Schumacher',
+        tel ? 'TEL;TYPE=CELL:' + tel.getAttribute('href').slice(4) : '',
+        mail ? 'EMAIL:' + mail.getAttribute('href').slice(7).split('?')[0] : '',
+        'URL:' + location.origin + '/', 'END:VCARD'
+      ].filter(Boolean).join('\r\n');
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([karte], { type: 'text/vcard;charset=utf-8' }));
+      a.download = 'kaelber-management.vcf';
+      document.body.appendChild(a); a.click(); a.remove();
+      setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+    });
+  })();
+</script>
+</body>
+</html>
