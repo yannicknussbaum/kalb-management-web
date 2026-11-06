@@ -93,20 +93,29 @@
   .knopf-hell { background: #fff; color: #1f4d24; }
   @media (prefers-color-scheme: dark) { .knopf { background: #3d9e3d; color: #0b1a0c; } .knopf-hell { background: #fff; color: #133219; } }
 
-  /* ---------- Kopf + Held ---------- */
+  /* ---------- Kopf + Held (Foto ganz oben, Text auf dem grünen Verlauf darunter) ---------- */
   .held {
+    position: relative; isolation: isolate;
+    display: flex; flex-direction: column;
+    min-height: min(92svh, 860px);
     background: var(--stall);
     color: #fff;
-    padding-bottom: clamp(48px, 8vw, 104px);
+    padding-bottom: clamp(40px, 7vw, 88px);
     overflow: hidden;
   }
+  .held-bild { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: 30% 35%; } /* hochkant: Kopf des Kalbs im Bild */
+  .held::before {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(rgba(10, 30, 14, .5), transparent 18%, transparent 42%, rgba(19, 50, 25, .82) 68%, var(--stall));
+  }
+  .held > .huelle { flex: 1; display: flex; flex-direction: column; width: 100%; }
+  .held-text { margin-top: auto; padding-top: 32vh; text-shadow: 0 1px 12px rgba(0, 0, 0, .25); }
   .kopf { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; padding-top: env(safe-area-inset-top); }
   .marke { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; font-weight: 650; font-size: 1.0625rem; letter-spacing: -.01em; }
   .marke svg { width: 34px; height: 34px; border-radius: 8px; box-shadow: 0 0 0 1px rgba(255, 255, 255, .18); }
   .kopf-link { color: var(--auf-stall-2); text-decoration: none; font-size: .9375rem; font-weight: 600; padding: 10px 0; }
   .kopf-link:hover { color: #fff; }
 
-  .held-raster { display: grid; gap: 28px; padding-top: 8px; }
   .held-text h1 {
     font-size: clamp(2.375rem, 1.5rem + 4.4vw, 4.5rem);
     line-height: 1.02;
@@ -194,29 +203,16 @@
     box-shadow: inset 0 -2px 0 rgba(0, 0, 0, .12), 0 2px 3px rgba(0, 0, 0, .35);
     transform: rotate(-.8deg);
   }
-  .tafel-tipp { margin-top: 14px; color: var(--auf-stall-2); font-size: .9375rem; display: flex; align-items: center; gap: 8px; }
+  .tafel-tipp { margin-top: 14px; color: var(--tinte-2); font-size: .9375rem; display: flex; align-items: center; gap: 8px; }
 
-  /* Die Tafel schreibt sich beim Öffnen einmal selbst */
+  /* Die Tafel schreibt sich einmal selbst, sobald sie ins Bild kommt (.wartet setzt das Skript unten) */
   @media (prefers-reduced-motion: no-preference) {
     .tafel-titel, .tz { animation: schreiben .9s cubic-bezier(.22, 1, .36, 1) backwards; animation-delay: calc(.2s + var(--i, 0) * .16s); }
+    .wartet .tafel-titel, .wartet .tz { animation-play-state: paused; }
     @keyframes schreiben { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
   }
 
-  @media (max-width: 899px) and (max-height: 760px) {
-    .kopf { min-height: 52px; }
-    .held-raster { gap: 16px; padding-top: 0; }
-    .tafel { padding: 10px 14px 14px; }
-    .tafel-titel { font-size: 1.25rem; margin-bottom: 0; }
-    .tz { min-height: 36px; padding: 2px 8px; font-size: 1.0625rem; }
-    .tafel-halter { padding-bottom: 10px; }
-    .tafel-tipp { margin-top: 8px; font-size: .875rem; }
-    .held-text h1 { font-size: 2.125rem; }
-    .held-text .lead { margin-top: 10px; font-size: 1rem; }
-    .held-aktion { margin-top: 16px; }
-  }
-  @media (max-width: 359px) and (max-height: 700px) { .tafel-tipp { display: none; } }
   @media (min-width: 900px) {
-    .held-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); align-items: center; gap: 64px; padding-top: 40px; }
     .rahmen, .ablage, .stift { transform: rotate(1.2deg); }
     .tafel { padding: 22px 28px 30px; }
     .tafel-titel { font-size: 1.85rem; }
@@ -234,6 +230,7 @@
     text-wrap: balance;
   }
   .zeile .text > p { margin-top: 18px; max-width: 36em; color: var(--tinte-2); font-size: 1.0625em; text-wrap: pretty; }
+  .zeile .text > .loesung { margin-top: 24px; color: var(--gruen-text); font-weight: 650; font-size: clamp(1.1875rem, 1.05rem + .6vw, 1.5rem); line-height: 1.3; }
   @media (min-width: 900px) {
     .zeile-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
     .zeile:nth-of-type(odd) .beleg { order: -1; }
@@ -373,7 +370,6 @@
   .wege small { display: block; margin-top: 3px; font-weight: 400; font-size: .875rem; opacity: .8; }
   .absender { margin-top: 32px; color: var(--auf-stall-2); font-size: .9375rem; }
   .absender a { color: #fff; }
-  .platzhalter { outline: 2px dashed #f2c94c; outline-offset: 2px; border-radius: 3px; }
   @media (min-width: 900px) { .kontakt-raster { grid-template-columns: 1.1fr 1fr; gap: 72px; align-items: center; } }
 
   .fuss { padding: 28px 0 calc(28px + env(safe-area-inset-bottom)); color: var(--tinte-2); font-size: .875rem; }
@@ -415,20 +411,31 @@
 </svg>
 
 <header class="held">
+  <img class="held-bild" src="kaelber.jpg" alt="Gesunde Kälber in einem sauberen, ordentlichen Stall" fetchpriority="high">
   <div class="huelle">
     <div class="kopf">
       <a class="marke" href="#"><svg aria-hidden="true"><use href="#logo"/></svg>Kälber Management</a>
       <a class="kopf-link" href="#kontakt">Kontakt</a>
     </div>
 
-    <div class="held-raster">
-      <div class="held-text">
-        <h1>Die App für deine Kälber.</h1>
-        <p class="lead">Füttern, aufpassen, nichts vergessen. Am Handy, direkt im Stall.</p>
-        <div class="held-aktion">
-          <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
-          <small>Läuft auf deinem Hof.</small>
-        </div>
+    <div class="held-text">
+      <h1>Die App für deine Kälber.</h1>
+      <p class="lead">Füttern, aufpassen, nichts vergessen. Am Handy, direkt im Stall.</p>
+      <div class="held-aktion">
+        <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
+        <small>Läuft auf deinem Hof.</small>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="zeile" id="problem" aria-labelledby="h-problem">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-problem">Zettel, Tafel, Kopf: Irgendwas geht immer unter.</h2>
+        <p>Wer wie viel trinkt, wer krank ist, wer bald abgesetzt wird: Das steht auf Zetteln, an der Tafel oder nur im Kopf. Ein Zettel geht verloren, die Tafel wird weggewischt, und wer dich vertritt, weiß von nichts.</p>
+        <p class="loesung">Mit Kälber Management hast du alles am Handy, und die App denkt mit.</p>
       </div>
 
       <div class="tafel-ort">
@@ -450,10 +457,8 @@
         <p class="tafel-tipp"><svg class="ico" aria-hidden="true"><use href="#i-hand"/></svg>Tipp auf eine Zeile: so sieht sie in der App aus.</p>
       </div>
     </div>
-  </div>
-</header>
+  </section>
 
-<main>
   <section class="zeile" id="fuettern" aria-labelledby="h-fuettern">
     <div class="huelle zeile-raster">
       <div class="text">
@@ -533,7 +538,7 @@
       </div>
       <ul class="ja">
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du Kälber mit Milch oder MAT tränkst</li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du schneller merken willst, wenn eins schlecht trinkt</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du einen schnellen Überblick über deine Kälber und die Aufgaben haben willst</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>nicht mehr alles im Kopf oder an der Tafel stehen soll</li>
         <li><svg class="ico" aria-hidden="true"><use href="#i-check"/></svg>du wissen willst, was dich das Futter kostet</li>
       </ul>
@@ -546,7 +551,7 @@
       <ol class="schritte">
         <li><div><h3>Du meldest dich.</h3><p>Per Anruf, WhatsApp oder E-Mail.</p></div></li>
         <li><div><h3>Wir richten alles mit dir ein.</h3><p>Die App läuft auf einem kleinen Rechner bei dir auf dem Hof. Deine Daten bleiben bei dir.</p></div></li>
-        <li><div><h3>Du fütterst mit dem Handy.</h3><p>Im Stall, Box für Box. Ohne Zettel.</p></div></li>
+        <li><div><h3>Du fütterst mit dem Handy und hast alles im Blick.</h3><p>Im Stall, Box für Box, ohne Zettel. Danach siehst du jederzeit, wie es deinen Kälbern geht und was ansteht.</p></div></li>
       </ol>
     </div>
   </section>
@@ -555,7 +560,7 @@
     <div class="huelle kontakt-raster">
       <div>
         <h2 id="h-kontakt">Interesse? Ruf an oder schreib uns.</h2>
-        <p class="absender">Ein Angebot vom Hof Schumacher · <span class="platzhalter">Ansprechpartner</span><br>
+        <p class="absender">Ein Angebot vom Hof Schumacher · Ansprechpartner<br>
           <a href="anleitung.html">Zur Bedienungsanleitung</a></p>
       </div>
       <div class="wege">
@@ -594,6 +599,17 @@
       .observe(document.querySelector('.held'));
     new IntersectionObserver(function (e) { kontaktSichtbar = e[0].isIntersecting; setzen(); }, { rootMargin: '0px 0px -30% 0px' })
       .observe(document.getElementById('kontakt'));
+  })();
+
+  // Tafel erst anschreiben, wenn sie ins Bild kommt; ohne IntersectionObserver läuft es wie früher sofort
+  (function () {
+    var tafel = document.querySelector('.tafel-ort');
+    if (!tafel || !('IntersectionObserver' in window)) return;
+    tafel.classList.add('wartet');
+    var io = new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { tafel.classList.remove('wartet'); io.disconnect(); }
+    }, { threshold: .3 });
+    io.observe(tafel);
   })();
 
   // „Kontakt speichern“: vCard aus den Links oben, damit die Daten nur an einer Stelle stehen
