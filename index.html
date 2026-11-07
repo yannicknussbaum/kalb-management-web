@@ -92,6 +92,8 @@
   .knopf:active { transform: translateY(0) scale(.98); }
   .knopf-hell { background: #fff; color: #1f4d24; }
   @media (prefers-color-scheme: dark) { .knopf { background: #3d9e3d; color: #0b1a0c; } .knopf-hell { background: #fff; color: #133219; } }
+  .knopf-rand { background: transparent; color: #fff; box-shadow: inset 0 0 0 2px rgba(255, 255, 255, .75); }
+  .knopf-rand:hover { background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 2px #fff; }
 
   /* ---------- Kopf + Held (Foto ganz oben, Text auf dem grünen Verlauf darunter) ---------- */
   .held {
@@ -423,6 +425,7 @@
       <p class="lead">Fütterung, Gesundheit und Aufgaben im Überblick. Direkt am Handy im Stall.</p>
       <div class="held-aktion">
         <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
+        <a class="knopf knopf-rand" href="https://demo.kalb-management.de">Demo ausprobieren</a>
         <small>Läuft lokal auf deinem Hof.</small>
       </div>
     </div>
