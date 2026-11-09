@@ -715,7 +715,7 @@
             <thead><tr><th>Feld</th><th>Wofür die App das braucht</th></tr></thead>
             <tbody>
               <tr><td>Ohrmarke</td><td>Die Nummer des Kalbs in der ganzen App.</td></tr>
-              <tr><td>Name</td><td>Freiwillig. Steht neben der Nummer auf der Kalbkarte und in der Kälberkartei; die Suche findet ihn auch.</td></tr>
+              <tr><td>Name</td><td>Freiwillig. Steht neben der Nummer auf der Kalbkarte und in der Kälberkartei; die Suche findet ihn auch — die Suche öffnet die Zahlentastatur, der Knopf <span class="tipp">ABC</span> im Suchfeld schaltet auf Buchstaben um.</td></tr>
               <tr><td>Geburtsdatum</td><td>Bestimmt das Alter — und damit jede Futterempfehlung und jedes automatische To-do.</td></tr>
               <tr><td>Geschlecht</td><td>Für Listen und Auswertungen.</td></tr>
               <tr><td>Geburtsgewicht</td><td>Erster Punkt der Gewichtskurve. Ohne ihn beginnt die Tageszunahme erst bei der ersten Wiegung.</td></tr>
@@ -735,7 +735,7 @@
           </div>
           <div class="eintrag">
             <dt>Biestmilch</dt>
-            <dd>Je Gabe: Stunden nach der Geburt, Liter und Brix-Wert. Daraus rechnet die App die aufgenommene IgG-Menge und bewertet die Versorgung mit einer Ampel. Der Zeitpunkt der ersten Gabe zählt dabei am meisten.</dd>
+            <dd>Je Gabe: Stunden nach der Geburt, Liter und Brix-Wert, dazu zwei Häkchen, ob die Milch vorher eingefroren und ob sie pasteurisiert war. Daraus rechnet die App die aufgenommene IgG-Menge und bewertet die Versorgung mit einer Ampel. Der Zeitpunkt der ersten Gabe zählt dabei am meisten.</dd>
           </div>
           <div class="eintrag">
             <dt>Krankheiten &amp; Behandlungsplan</dt>
@@ -811,6 +811,7 @@
           Kraftfutter
         </h2>
         <p class="abschnitt-vor">Funktioniert wie die Milch, ist aber absichtlich schlanker: Die Futtermethode gibt <strong>Kilogramm pro Tag</strong> vor, es gibt also <strong>eine Runde am Tag und keine Tageszeiten</strong>.</p>
+        <p>Oben steht der <strong>Ø Verbrauch je Tag</strong>: wie viel Kilogramm die Kälber in den letzten 30 Tagen im Schnitt pro Tag gefressen haben, je Futtermittel — praktisch zum Nachbestellen. Gezählt wird, wozu der Rest eingetragen ist.</p>
 
         <h3>Der Rundgang</h3>
         <p>Die Boxen kommen in der Reihenfolge, die du unter <span class="pfad">Einstellungen → Kraftfutter</span> festlegst — sie kann anders sein als bei der Milch. Je Kalb steht die empfohlene Menge und darunter „Zuletzt gefressen". Zwei Gesten:</p>
@@ -852,7 +853,7 @@
           <svg class="tab-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
           Listen
         </h2>
-        <p class="abschnitt-vor">Hier steht die Auswertung. Elf Karten, jede führt in eine eigene Ansicht. Nichts davon musst du pflegen — alles rechnet sich aus dem, was du beim Füttern und in den Karteien einträgst.</p>
+        <p class="abschnitt-vor">Hier steht die Auswertung. Zwölf Karten, jede führt in eine eigene Ansicht. Nichts davon musst du pflegen — alles rechnet sich aus dem, was du beim Füttern und in den Karteien einträgst.</p>
 
         <div class="eintraege">
           <div class="eintrag"><dt>Vergangene Fütterungen</dt><dd>Alle Runden rückwärts, je Kalb oder je Runde. Offene Runden stehen als „Rest offen" drin. In der Grafik erscheint die letzte Fütterung erst, wenn ihr Rest eingetragen ist — vorher wäre die Säule nur die Vorlage, nicht das, was gefressen wurde.</dd></div>
@@ -865,7 +866,8 @@
           <div class="eintrag"><dt>Futterkosten</dt><dd>Je Kalb in Euro, mit Alter und Box, darunter wofür das Geld ging (Milch, MAT, Kraftfutter). Oben die Summe aller Kälber und der Schnitt je Kalb. Teuerstes Tier zuerst; sortieren lässt sich auch nach Nummer oder Alter.</dd></div>
           <div class="eintrag"><dt>Bilanz</dt><dd>Kennzahlen je Jahr und je Monat — siehe unten.</dd></div>
           <div class="eintrag"><dt>Archiv</dt><dd>Abgegangene Tiere, mit Weg zurück.</dd></div>
-          <div class="eintrag"><dt>CSV-Export</dt><dd>Fertige Exporte für Excel und ein Generator für eigene Listen: Spalten selbst zusammenstellen.</dd></div>
+          <div class="eintrag"><dt>Listengenerator</dt><dd>Eigene Tabellen aus allen Daten: Spalten wählen und mit ▲▼ ordnen, Filter setzen (z.&nbsp;B. „Alter mindestens 50 Tage") und sortieren — oder einfach auf einen Spaltenkopf tippen. Neben den Stammdaten gibt es fertige Kennzahlen wie Ø Milch und Ø Rest der letzten 7 Tage, Ø Kraftfutter der letzten 7 Tage, Tage seit der letzten Wiegung, Absetztermin laut Tränkekurve oder Futterkosten je Lebenstag. Jede Liste lässt sich als Vorlage speichern und als CSV für Excel herunterladen; eine Zeile antippen öffnet die Kälberkartei.</dd></div>
+          <div class="eintrag"><dt>CSV-Export</dt><dd>Fertige Exporte für Excel.</dd></div>
         </div>
 
         <h3>Die Bilanz</h3>
