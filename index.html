@@ -136,6 +136,33 @@
   .held-aktion { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
   .held-aktion small { color: var(--auf-stall-2); font-size: .9375rem; }
 
+  /* ---------- Spot: läuft im Grün des Kopfbereichs weiter ---------- */
+  .film { background: var(--stall); color: #fff; padding-bottom: clamp(72px, 10vw, 128px); }
+  .film-raster { display: grid; gap: 36px; padding-top: clamp(48px, 7vw, 88px); border-top: 1px solid rgba(255, 255, 255, .16); }
+  .film h2 { font-size: clamp(2rem, 1.35rem + 2.8vw, 3.25rem); line-height: 1.05; letter-spacing: -.03em; font-weight: 700; text-wrap: balance; }
+  .film .text p { margin-top: 18px; max-width: 30em; color: var(--auf-stall-2); font-size: 1.0625em; text-wrap: pretty; }
+  .spot {
+    position: relative; justify-self: center;
+    width: min(100%, 360px); aspect-ratio: 9 / 16;
+    border-radius: 28px; overflow: hidden;
+    background: #f5f4ef url("spot-poster.jpg") center / cover;
+    box-shadow: 0 40px 70px -34px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .12);
+  }
+  .spot video { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .spot-knoepfe { position: absolute; left: 12px; right: 12px; bottom: 12px; display: flex; justify-content: space-between; gap: 8px; }
+  .spot-knoepfe button {
+    min-height: 44px; padding: 0 18px;
+    border: 0; border-radius: 999px;
+    background: rgba(18, 26, 19, .74); color: #fff;
+    -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+    font: 600 .9375rem/1 var(--sans); cursor: pointer;
+  }
+  .spot-knoepfe button:hover { background: rgba(18, 26, 19, .88); }
+  @media (min-width: 900px) {
+    .film-raster { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 72px; align-items: center; }
+    .spot { width: min(100%, 400px); }
+  }
+
   /* ---------- Die Stalltafel ---------- */
   .tafel-halter { position: relative; padding-bottom: 12px; }
   .rahmen {
@@ -434,6 +461,24 @@
 </header>
 
 <main>
+  <!-- div statt section: .zeile:nth-of-type zählt die Abschnitte für den Hell-dunkel-Wechsel -->
+  <div class="film" role="region" aria-labelledby="h-film">
+    <div class="huelle film-raster">
+      <div class="text">
+        <h2 id="h-film">In 30 Sekunden erklärt.</h2>
+        <p>Ein Morgen im Kälberstall: welches Kalb auffällt, wie viel Milch jedes Kalb bekommt und woran die App erinnert.</p>
+      </div>
+      <div class="spot">
+        <video id="spot-video" data-src="spot.mp4" poster="spot-poster.jpg" muted playsinline loop preload="none"
+          aria-label="Werbespot, 30 Sekunden, ohne Sprache: Die App zeigt jeden Morgen auffällige Kälber, die passende Milchmenge Box für Box und erinnert an Absetzen und Umstallen."></video>
+        <div class="spot-knoepfe">
+          <button type="button" id="spot-pause">Abspielen</button>
+          <button type="button" id="spot-ton" aria-pressed="false">Ton an</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <section class="zeile" id="problem" aria-labelledby="h-problem">
     <div class="huelle zeile-raster">
       <div class="text">
@@ -591,9 +636,9 @@
   (function () {
     var schwebe = document.getElementById('schwebe');
     if (!('IntersectionObserver' in window)) return;
-    var obenSichtbar = true, kontaktSichtbar = false;
+    var obenSichtbar = true, kontaktSichtbar = false, spotSichtbar = false;
     function setzen() {
-      var an = !obenSichtbar && !kontaktSichtbar;
+      var an = !obenSichtbar && !kontaktSichtbar && !spotSichtbar;   // nicht über den Knöpfen des Spots
       schwebe.classList.toggle('sichtbar', an);
       schwebe.setAttribute('aria-hidden', String(!an));
       schwebe.firstElementChild.tabIndex = an ? 0 : -1;
@@ -603,6 +648,40 @@
       .observe(document.querySelector('.held'));
     new IntersectionObserver(function (e) { kontaktSichtbar = e[0].isIntersecting; setzen(); }, { rootMargin: '0px 0px -30% 0px' })
       .observe(document.getElementById('kontakt'));
+    new IntersectionObserver(function (e) { spotSichtbar = e[0].isIntersecting; setzen(); })
+      .observe(document.querySelector('.spot'));
+  })();
+
+  // Spot: lädt erst kurz bevor er ins Bild kommt (Messe-WLAN), spielt stumm, solange er sichtbar ist.
+  // Wer „weniger Bewegung“ eingestellt hat oder selbst anhält, startet ihn nur noch von Hand.
+  (function () {
+    var v = document.getElementById('spot-video');
+    if (!v) return;
+    var pause = document.getElementById('spot-pause'), ton = document.getElementById('spot-ton');
+    var angehalten = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    function laden() { if (!v.getAttribute('src')) v.src = v.dataset.src; }
+    function spielen() { laden(); var p = v.play(); if (p) p.catch(function () {}); }
+    function anzeigen() {
+      pause.textContent = v.paused ? 'Abspielen' : 'Pause';
+      ton.textContent = v.muted ? 'Ton an' : 'Ton aus';
+      ton.setAttribute('aria-pressed', String(!v.muted));
+    }
+    pause.addEventListener('click', function () {
+      if (v.paused) { angehalten = false; spielen(); } else { angehalten = true; v.pause(); }
+    });
+    ton.addEventListener('click', function () {
+      v.muted = !v.muted;
+      if (!v.muted && v.paused) { angehalten = false; spielen(); }
+      anzeigen();
+    });
+    v.addEventListener('play', anzeigen);
+    v.addEventListener('pause', anzeigen);
+    if (!('IntersectionObserver' in window)) { laden(); return; }
+    new IntersectionObserver(function (e) { if (e[0].isIntersecting) laden(); }, { rootMargin: '0px 0px 120px 0px' }).observe(v);
+    new IntersectionObserver(function (e) {
+      if (e[0].isIntersecting) { if (!angehalten) spielen(); }
+      else if (!v.paused) v.pause();
+    }, { threshold: .5 }).observe(v);
   })();
 
   // Tafel erst anschreiben, wenn sie ins Bild kommt; ohne IntersectionObserver läuft es wie früher sofort
