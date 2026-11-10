@@ -14,6 +14,62 @@
 <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
 <link rel="icon" type="image/png" sizes="192x192" href="images/logo-192.png">
 <link rel="apple-touch-icon" href="images/logo-180.png">
+<!-- Für Suchmaschinen und KI-Assistenten: was die Seite anbietet und von wem. Die häufigen Fragen sind
+     direkt im HTML ausgezeichnet (Microdata unten), damit ihr Text nur an einer Stelle steht. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://kalb-management.de/#website",
+      "url": "https://kalb-management.de/",
+      "name": "Kälber Management",
+      "inLanguage": "de",
+      "publisher": { "@id": "https://kalb-management.de/#anbieter" }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://kalb-management.de/#anbieter",
+      "name": "Kälber Management",
+      "legalName": "Hof Schumacher",
+      "url": "https://kalb-management.de/",
+      "logo": "https://kalb-management.de/images/logo-192.png",
+      "email": "info@kalb-management.de",
+      "telephone": "+32 493 45 87 22",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Hochstraße 270A",
+        "postalCode": "4701",
+        "addressLocality": "Kettenis",
+        "addressCountry": "BE"
+      }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Kälber Management",
+      "url": "https://kalb-management.de/",
+      "description": "App für die Kälberaufzucht: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Milch, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Am Handy im Stall, läuft lokal auf dem Hof.",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "iOS, Android, Windows, macOS (im Browser)",
+      "inLanguage": "de",
+      "image": "https://kalb-management.de/images/logo-192.png",
+      "publisher": { "@id": "https://kalb-management.de/#anbieter" },
+      "featureList": [
+        "Tränkeplan mit Vollmilch und MAT: empfohlene Milchmenge je Kalb und Mahlzeit",
+        "Rundgang Box für Box am Handy, mit Erfassung der Reste",
+        "Hinweis auf Kälber, die weniger trinken als sonst oder als Gleichaltrige",
+        "Kraftfutter nach Futterkurve",
+        "Krankheiten und Behandlungspläne",
+        "Gewicht, Tageszunahme und Biestmilch",
+        "Einzel-, Paar- und Gruppenhaltung mit Gruppentränke",
+        "Automatische Aufgaben und Push-Erinnerungen, etwa zum Absetzen und Umstallen",
+        "Futterkosten je Kalb sowie Monats- und Jahresbilanz"
+      ]
+    }
+  ]
+}
+</script>
 <style>
   :root {
     color-scheme: light dark;
@@ -374,6 +430,28 @@
     .schritte h3 { margin-top: 4px; }
   }
 
+  /* ---------- Häufige Fragen (natives <details>, kein Skript) ---------- */
+  #fragen .zeile-raster { align-items: start; }
+  .fragen details { border-top: 1px solid var(--linie); }
+  .fragen details:last-child { border-bottom: 1px solid var(--linie); }
+  .fragen summary {
+    display: flex; justify-content: space-between; align-items: center; gap: 16px;
+    min-height: 64px; padding: 14px 0;
+    font-weight: 650; font-size: clamp(1.0625rem, 1rem + .35vw, 1.25rem); line-height: 1.3;
+    list-style: none; cursor: pointer;
+  }
+  .fragen summary::-webkit-details-marker { display: none; }
+  .fragen summary::after {
+    content: "+"; flex: none;
+    width: 34px; height: 34px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--flaeche); color: var(--gruen-text);
+    font-size: 1.5rem; font-weight: 400; line-height: 1;
+    transition: transform .25s cubic-bezier(.22, 1, .36, 1);
+  }
+  .fragen details[open] summary::after { transform: rotate(45deg); }
+  .fragen p { padding: 0 50px 22px 0; color: var(--tinte-2); text-wrap: pretty; }
+
   /* ---------- Kontakt ---------- */
   .kontakt {
     background: var(--stall); color: #fff;
@@ -602,6 +680,46 @@
         <li><div><h3>Gemeinsam einrichten</h3><p>Die App läuft auf einem kleinen Rechner direkt auf deinem Hof. Deine Daten bleiben im Betrieb.</p></div></li>
         <li><div><h3>Im Stall loslegen</h3><p>Box für Box am Handy füttern, ohne Zettel. Gesundheit und anstehende Aufgaben jederzeit im Blick.</p></div></li>
       </ol>
+    </div>
+  </section>
+
+  <!-- Microdata (FAQPage) statt einer Kopie im JSON-LD oben: der sichtbare Text ist zugleich die Auszeichnung -->
+  <section class="zeile" id="fragen" aria-labelledby="h-fragen" itemscope itemtype="https://schema.org/FAQPage">
+    <div class="huelle zeile-raster">
+      <div class="text">
+        <h2 id="h-fragen">Häufige Fragen.</h2>
+        <p>Deine Frage ist nicht dabei? <a href="#kontakt">Sprich uns einfach an.</a></p>
+      </div>
+      <div class="fragen">
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Brauche ich einen Tränkeautomaten?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Nein. Die App ist für das Tränken von Hand gemacht, mit Vollmilch oder MAT. Beim Rundgang zeigt sie Box für Box, wie viel Milch jedes Kalb bekommt, und du trägst ein, was gegeben wurde und was übrig blieb.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Welches Handy brauche ich?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Jedes iPhone oder Android-Handy reicht. Die App läuft im Browser und lässt sich wie eine normale App auf den Home-Bildschirm legen. Am Tablet oder PC funktioniert sie genauso.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Wo liegen meine Daten?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Auf einem kleinen Rechner direkt auf deinem Hof, nicht bei einem fremden Anbieter. Alle Daten stecken in einer einzigen Datei. Die kannst du jederzeit selbst herunterladen und als Sicherung ablegen.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Kann ich die App auch von unterwegs nutzen?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Ja. Auf Wunsch bekommt die App einen geschützten Zugang über das Internet, mit Passwort. Dann erreichst du sie nicht nur im WLAN des Hofs, sondern überall.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Können mehrere Personen mit der App arbeiten?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Ja. Jeder nutzt sein eigenes Handy und sieht denselben Stand, auch die Vertretung im Urlaub. Mit einer PIN sperrst du die Einstellungen, damit nicht jeder die Futterkurven ändern kann.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Was kann die App außer der Milch?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Kraftfutter nach Futterkurve, Krankheiten und Behandlungspläne, Gewicht und Tageszunahme, Biestmilch, Umstallen in Einzel-, Paar- oder Gruppenhaltung, Futterkosten je Kalb und eine Monats- und Jahresbilanz.</p></div>
+        </details>
+        <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
+          <summary itemprop="name">Kann ich die App vorher ausprobieren?</summary>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Ja, in der <a href="https://demo.kalb-management.de">Demo mit Beispieldaten</a>, ohne Anmeldung. Sie wird jede Nacht zurückgesetzt, du kannst also alles ausprobieren. Gern zeigen wir dir die App auch persönlich.</p></div>
+        </details>
+      </div>
     </div>
   </section>
 
