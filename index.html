@@ -750,6 +750,12 @@
 <div class="schwebe" id="schwebe" aria-hidden="true"><a class="knopf" href="#kontakt" tabindex="-1">Vorführung anfragen</a></div>
 
 <script>
+  // Besucher zählen: meldet den Aufruf an die Demo, die Zeit und ungefähren Ort festhält (lib/besucher.js).
+  // Nur auf der echten Domain, damit lokale Vorschauen nicht mitzählen.
+  if (navigator.sendBeacon && /(^|\.)kalb-management\.de$/.test(location.hostname)) {
+    navigator.sendBeacon('https://demo.kalb-management.de/besuch');
+  }
+
   // Schwebender Knopf: nur zwischen Held und Kontaktbereich
   (function () {
     var schwebe = document.getElementById('schwebe');
