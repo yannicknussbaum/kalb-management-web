@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kälber Management – die App für die Kälberaufzucht</title>
-<meta name="description" content="Die App für die Kälberaufzucht: passende Milchmenge je Kalb, auffällige Tiere auf einen Blick, Erinnerungen an Absetzen und Umstallen. Am Handy im Stall, lokal auf dem Hof.">
+<meta name="description" content="Die App für die Kälberaufzucht: passende Milchmenge je Kalb, auffällige Tiere auf einen Blick, Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.">
 <meta property="og:title" content="Kälber Management – die App für die Kälberaufzucht">
 <meta property="og:description" content="Fütterung, Gesundheit und Aufgaben im Überblick. Direkt am Handy im Stall.">
 <meta property="og:type" content="website">
@@ -49,7 +49,7 @@
       "@type": "SoftwareApplication",
       "name": "Kälber Management",
       "url": "https://kalb-management.de/",
-      "description": "App für die Kälberaufzucht: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Milch, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Am Handy im Stall, läuft lokal auf dem Hof.",
+      "description": "App für die Kälberaufzucht: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Milch, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "iOS, Android, Windows, macOS (im Browser)",
       "inLanguage": "de",
@@ -181,6 +181,14 @@
     font-weight: 700;
     text-wrap: balance;
   }
+  .held-zeile {
+    margin-top: .35em;
+    font-size: clamp(1.5rem, 1.05rem + 2vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -.025em;
+    font-weight: 600;
+    text-wrap: balance;
+  }
   .held-text .lead {
     margin-top: 16px;
     max-width: 34em;
@@ -190,7 +198,6 @@
     text-wrap: pretty;
   }
   .held-aktion { margin-top: 26px; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; }
-  .held-aktion small { color: var(--auf-stall-2); font-size: .9375rem; }
 
   /* ---------- Spot: läuft im Grün des Kopfbereichs weiter ---------- */
   .film { background: var(--stall); color: #fff; padding-bottom: clamp(72px, 10vw, 128px); }
@@ -526,13 +533,13 @@
     </div>
 
     <div class="held-text">
-      <h1>Die App für die Kälberaufzucht.</h1>
+      <h1>Kein Kalb geht unter.</h1>
+      <p class="held-zeile">Ein Blick fürs ganze Team.</p>
       <p class="lead">Fütterung, Gesundheit und Aufgaben im Überblick. Direkt am Handy im Stall.</p>
       <div class="held-aktion">
         <a class="knopf knopf-hell" href="#kontakt">Vorführung anfragen</a>
         <!-- direkt auf den Funnel: die INWX-Weiterleitung demo.kalb-management.de kann nur http -->
         <a class="knopf knopf-rand" href="https://demo.kalb-management.de">Demo ausprobieren</a>
-        <small>Läuft lokal auf deinem Hof.</small>
       </div>
     </div>
   </div>
@@ -677,7 +684,7 @@
       <h2 id="h-ablauf">So läuft der Einstieg.</h2>
       <ol class="schritte">
         <li><div><h3>Kontakt aufnehmen</h3><p>Per Telefon, WhatsApp oder E-Mail.</p></div></li>
-        <li><div><h3>Gemeinsam einrichten</h3><p>Die App läuft auf einem kleinen Rechner direkt auf deinem Hof. Deine Daten bleiben im Betrieb.</p></div></li>
+        <li><div><h3>Gemeinsam einrichten</h3><p>Die App läuft auf einem kleinen Rechner auf deinem Hof oder sicher auf einem Server in Europa. Alle Daten kannst du jederzeit selbst als Sicherung herunterladen.</p></div></li>
         <li><div><h3>Im Stall loslegen</h3><p>Box für Box am Handy füttern, ohne Zettel. Gesundheit und anstehende Aufgaben jederzeit im Blick.</p></div></li>
       </ol>
     </div>
@@ -701,7 +708,7 @@
         </details>
         <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
           <summary itemprop="name">Wo liegen meine Daten?</summary>
-          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Auf einem kleinen Rechner direkt auf deinem Hof, nicht bei einem fremden Anbieter. Alle Daten stecken in einer einzigen Datei. Die kannst du jederzeit selbst herunterladen und als Sicherung ablegen.</p></div>
+          <div itemprop="acceptedAnswer" itemscope itemtype="https://schema.org/Answer"><p itemprop="text">Auf einem kleinen Rechner auf deinem Hof oder auf einem Server in Europa, je nachdem, was dir lieber ist. Alle Daten stecken in einer einzigen Datei. Die kannst du jederzeit selbst herunterladen und als Sicherung ablegen.</p></div>
         </details>
         <details itemprop="mainEntity" itemscope itemtype="https://schema.org/Question">
           <summary itemprop="name">Kann ich die App auch von unterwegs nutzen?</summary>
