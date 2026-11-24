@@ -1,0 +1,24 @@
+# Kälber Management
+
+> Web-App für die Kälberaufzucht auf Rinderhöfen: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Menge, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Läuft im Browser auf dem Handy im Stall, die Daten liegen auf einem Rechner auf dem Hof oder auf einem Server in Europa. Anbieter: Hof Schumacher, Kettenis (Belgien).
+
+## Seiten
+
+- [Startseite](https://kalb-management.de/): Überblick, häufige Fragen, Kontakt
+- [Bedienungsanleitung](https://kalb-management.de/anleitung.html): App einrichten und alle Funktionen nachschlagen
+- [Demo mit Beispieldaten](https://demo.kalb-management.de): ohne Anmeldung ausprobieren, wird jede Nacht zurückgesetzt
+
+## Funktionen
+
+- Tränkeplan mit Vollmilch und MAT, Rundgang Box für Box mit Erfassung der Reste
+- Hinweis auf Kälber, die weniger trinken als sonst oder als Gleichaltrige
+- Kraftfutter nach Futterkurve, Gewicht und Tageszunahme, Biestmilch
+- Krankheiten und Behandlungspläne
+- Einzel-, Paar- und Gruppenhaltung mit Gruppentränke
+- Automatische Aufgaben und Push-Erinnerungen
+- Futterkosten je Kalb sowie Monats- und Jahresbilanz
+
+## Kontakt
+
+- E-Mail: info@kalb-management.de
+- Telefon und WhatsApp: +32 493 45 87 22

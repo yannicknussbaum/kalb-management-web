@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://kalb-management.de/</loc>
+    <lastmod>2026-11-24</lastmod>
+    <image:image>
+      <image:loc>https://kalb-management.de/kaelber.jpg</image:loc>
+      <image:title>Junges Kalb liegt im frischen Stroh</image:title>
+    </image:image>
+    <video:video>
+      <video:thumbnail_loc>https://kalb-management.de/spot-poster.jpg</video:thumbnail_loc>
+      <video:title>Kälber Management in 30 Sekunden</video:title>
+      <video:description>Ein Morgen im Kälberstall: welches Kalb auffällt, wie viel Milch jedes Kalb bekommt und woran die App erinnert.</video:description>
+      <video:content_loc>https://kalb-management.de/spot.mp4</video:content_loc>
+      <video:duration>30</video:duration>
+    </video:video>
   </url>
   <url>
     <loc>https://kalb-management.de/anleitung.html</loc>
+    <lastmod>2026-11-24</lastmod>
   </url>
 </urlset>
