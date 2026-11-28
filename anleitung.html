@@ -745,7 +745,7 @@
           </div>
           <div class="eintrag">
             <dt>Krankheiten &amp; Behandlungsplan</dt>
-            <dd>Krankheit eintragen, Behandlungen als Plan hinterlegen. Solange der Plan läuft, steht das Kalb in „Heute beobachten" — und noch drei Tage nach der letzten Behandlung.</dd>
+            <dd>Krankheit eintragen, Behandlungen als Plan hinterlegen. Solange der Plan läuft, steht das Kalb in „Heute beobachten" — und noch drei Tage nach der letzten Behandlung. Medikament, Dosierung und Wartezeit legt der Tierarzt fest: Die App erinnert nur an die Schritte, die du eingetragen hast, und rechnet keine Wartezeiten.</dd>
           </div>
           <div class="eintrag">
             <dt>Lebenslinie</dt>
@@ -782,7 +782,7 @@
           <p><b>Unterbrechen statt abbrechen.</b> Unter dem Rundgang steht <span class="tipp">Unterbrechen</span>. Er führt zurück ins Menü, und dort ist der Knopf der Mahlzeit geteilt: links <span class="tipp">Fütterung fortsetzen</span> — es geht beim Kalb weiter, bei dem du aufgehört hast —, rechts <span class="tipp">Fütterung abbrechen</span>, das verwirft alles, was in dieser Runde schon erfasst war. Wechselst du mitten im Rundgang in einen anderen Reiter oder schließt die App, wird ebenso pausiert. Beim Kraftfutter genauso.</p>
         </div>
 
-        <h3>Woher die empfohlene Menge kommt</h3>
+        <h3>Woher der Mengenvorschlag kommt</h3>
         <p>Die Futterkurve gibt je Alter eine Milchmenge vor; zwischen den Stützpunkten rechnet die App linear. Darauf legt sie drei Sicherungen:</p>
         <div class="eintraege">
           <div class="eintrag">
@@ -917,6 +917,7 @@
         <h3>Daten</h3>
         <div class="eintraege">
           <div class="eintrag"><dt>Datenbank exportieren</dt><dd>Lädt die komplette Datenbank als Datei herunter. Das ist dein Backup — siehe <a href="#sichern">Daten sichern</a>.</dd></div>
+          <div class="eintrag"><dt>Automatische Sicherungen</dt><dd>Die App sichert sich jeden Tag und vor jedem Update selbst. Hier siehst du die Sicherungen, kannst sie herunterladen oder zurückspielen — siehe <a href="#sichern">Daten sichern</a>.</dd></div>
           <div class="eintrag"><dt>Datenbank importieren</dt><dd>Eine Datei wieder einspielen, entweder als vollständiger Ersatz oder um Kälber zu ergänzen. Die App legt vorher automatisch ein Sicherheits-Backup an.</dd></div>
           <div class="eintrag"><dt>Gefahrenzone</dt><dd>Der Werksreset. Löscht alles und setzt die App in den Auslieferungszustand zurück. Verlangt das Login-Passwort und eine ausdrückliche Bestätigung.</dd></div>
         </div>
@@ -929,6 +930,10 @@
         <h2>Häufige Fragen</h2>
 
         <div class="eintraege">
+          <div class="eintrag">
+            <dt>Was die App nicht ersetzt</dt>
+            <dd>Mengen, Absetztermine und „Heute beobachten" sind Vorschläge, gerechnet aus deinen Kurven und Einträgen. Was ein Kalb bekommt und wie es ihm geht, entscheidest und prüfst du selbst, jeden Tag. Behandlungen legt der Tierarzt fest. Die App ersetzt keine amtlichen Aufzeichnungen wie Arzneimittelregister bzw. Bestandsbuch, Sanitel oder HIT. Kosten, Milchpreis und Bilanz sind Richtwerte ohne Gewähr. Erinnerungen per Mitteilung kommen in aller Regel an, garantiert ist die Zustellung aber nicht.</dd>
+          </div>
           <div class="eintrag">
             <dt>Die App fragt wieder nach dem Passwort</dt>
             <dd>Normal. Die Anmeldung gilt 15 Tage und verlängert sich nicht durch Benutzung. Einfach neu anmelden.</dd>
@@ -974,6 +979,14 @@
           <li><p><strong>Regelmäßig wiederholen.</strong> Einmal im Monat reicht für die meisten Betriebe. Auf jeden Fall vor größeren Änderungen und vor einem Werksreset.</p></li>
         </ol>
         <p>Zurückspielen geht denselben Weg über <span class="tipp">Datenbank importieren</span>. Die App prüft die Datei vorher und legt automatisch ein Sicherheits-Backup des aktuellen Stands an, bevor sie etwas überschreibt.</p>
+
+        <h3>Automatische Sicherungen</h3>
+        <p>Zusätzlich sichert sich die App von selbst: <b>jeden Tag einmal</b> und <b>vor jedem Update</b>, bevor die neue Version etwas an den Daten ändert. Aufgehoben werden die letzten 14 Tage und die letzten 5 Updates. Du findest sie unter <span class="tipp">Einstellungen → Allgemein → Automatische Sicherungen</span>.</p>
+        <div class="eintraege">
+          <div class="eintrag"><dt>Herunterladen</dt><dd>Holt eine Sicherung als Datei aufs Gerät, wie der Export.</dd></div>
+          <div class="eintrag"><dt>Zurückspielen</dt><dd>Ersetzt Kälber, Fütterungen, To-dos und Kurven durch den Stand der Sicherung. Login, PIN, Push und Einstellungen bleiben. Vorher sichert die App den jetzigen Stand, du kannst also wieder zurück.</dd></div>
+        </div>
+        <div class="achtung"><p><b>Die automatischen Sicherungen liegen auf demselben Rechner wie die App.</b> Gegen versehentlich gelöschte Daten oder ein schiefgegangenes Update helfen sie. Geht der Rechner selbst kaputt oder wird er gestohlen, sind sie mit weg — exportiere also trotzdem regelmäßig und leg die Datei woanders ab.</p></div>
       </section>
 
       <div class="leer-treffer" id="leer-treffer" hidden>

@@ -1,6 +1,6 @@
 # Kälber Management
 
-> Web-App für die Kälberaufzucht auf Rinderhöfen: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Menge, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Läuft im Browser auf dem Handy im Stall, die Daten liegen auf einem Rechner auf dem Hof oder auf einem Server in Europa. Anbieter: Hof Schumacher, Kettenis (Belgien).
+> Web-App für die Kälberaufzucht auf Rinderhöfen: Mengenvorschlag je Kalb nach Tränkekurve, Alter und zuletzt getrunkener Menge, Hinweise auf auffällige Kälber, automatische Erinnerungen an Absetzen und Umstallen. Läuft im Browser auf dem Handy im Stall, die Daten liegen auf einem Rechner auf dem Hof oder auf einem Server in Europa. Anbieter: Yannick Nussbaum und Luca Schumacher, Kettenis (Belgien).
 
 ## Seiten
 

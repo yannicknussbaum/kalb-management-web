@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kälber Management – die App für die Kälberaufzucht</title>
-<meta name="description" content="Die App für die Kälberaufzucht: passende Milchmenge je Kalb, auffällige Tiere auf einen Blick, Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.">
+<meta name="description" content="Die App für die Kälberaufzucht: Mengenvorschlag je Kalb, Hinweise auf auffällige Tiere, Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.">
 <link rel="canonical" href="https://kalb-management.de/">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta property="og:title" content="Kälber Management – die App für die Kälberaufzucht">
@@ -57,7 +57,7 @@
       "description": "Ein Morgen im Kälberstall: welches Kalb auffällt, wie viel Milch jedes Kalb bekommt und woran die App erinnert.",
       "thumbnailUrl": "https://kalb-management.de/spot-poster.jpg",
       "contentUrl": "https://kalb-management.de/spot.mp4",
-      "uploadDate": "2026-11-10",
+      "uploadDate": "2026-11-10T11:00:00+01:00",
       "duration": "PT30S",
       "inLanguage": "de"
     },
@@ -65,7 +65,10 @@
       "@type": "Organization",
       "@id": "https://kalb-management.de/#anbieter",
       "name": "Kälber Management",
-      "legalName": "Hof Schumacher",
+      "founder": [
+        { "@type": "Person", "name": "Yannick Nussbaum" },
+        { "@type": "Person", "name": "Luca Schumacher" }
+      ],
       "url": "https://kalb-management.de/",
       "logo": "https://kalb-management.de/images/logo-192.png",
       "email": "info@kalb-management.de",
@@ -83,14 +86,14 @@
       "@id": "https://kalb-management.de/#app",
       "name": "Kälber Management",
       "url": "https://kalb-management.de/",
-      "description": "App für die Kälberaufzucht: empfohlene Milchmenge je Kalb nach Alter und zuletzt getrunkener Milch, auffällige Kälber auf einen Blick, automatische Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.",
+      "description": "App für die Kälberaufzucht: Mengenvorschlag je Kalb nach Tränkekurve, Alter und zuletzt getrunkener Milch, Hinweise auf auffällige Kälber, automatische Erinnerungen an Absetzen und Umstallen. Am Handy im Stall.",
       "applicationCategory": "BusinessApplication",
       "operatingSystem": "iOS, Android, Windows, macOS (im Browser)",
       "inLanguage": "de",
       "image": "https://kalb-management.de/images/logo-192.png",
       "publisher": { "@id": "https://kalb-management.de/#anbieter" },
       "featureList": [
-        "Tränkeplan mit Vollmilch und MAT: empfohlene Milchmenge je Kalb und Mahlzeit",
+        "Tränkeplan mit Vollmilch und MAT: Mengenvorschlag je Kalb und Mahlzeit",
         "Rundgang Box für Box am Handy, mit Erfassung der Reste",
         "Hinweis auf Kälber, die weniger trinken als sonst oder als Gleichaltrige",
         "Kraftfutter nach Futterkurve",
@@ -567,7 +570,7 @@
     </div>
 
     <div class="held-text">
-      <h1>Kein Kalb geht unter.</h1>
+      <h1>Kälberaufzucht ohne Zettelwirtschaft.</h1>
       <p class="held-zeile">Ein Blick fürs ganze Team.</p>
       <p class="lead">Fütterung, Gesundheit und Aufgaben im Überblick. Direkt am Handy im Stall.</p>
       <div class="held-aktion">
@@ -589,7 +592,7 @@
       </div>
       <div class="spot">
         <video id="spot-video" data-src="spot.mp4" poster="spot-poster.jpg" muted playsinline loop preload="none"
-          aria-label="Werbespot, 30 Sekunden, ohne Sprache: Die App zeigt jeden Morgen auffällige Kälber, die passende Milchmenge Box für Box und erinnert an Absetzen und Umstallen."></video>
+          aria-label="Werbespot, 30 Sekunden, ohne Sprache: Die App zeigt jeden Morgen auffällige Kälber, einen Mengenvorschlag Box für Box und erinnert an Absetzen und Umstallen."></video>
         <div class="spot-knoepfe">
           <button type="button" id="spot-pause">Abspielen</button>
           <button type="button" id="spot-ton" aria-pressed="false">Ton an</button>
@@ -630,13 +633,13 @@
   <section class="zeile" id="fuettern" aria-labelledby="h-fuettern">
     <div class="huelle zeile-raster">
       <div class="text">
-        <h2 id="h-fuettern">Die passende Milchmenge für jedes Kalb.</h2>
-        <p>Beim Rundgang zeigt die App Box für Box die empfohlene Menge, berechnet nach Alter und zuletzt getrunkener Milch.</p>
+        <h2 id="h-fuettern">Ein Mengenvorschlag für jedes Kalb.</h2>
+        <p>Beim Rundgang schlägt die App Box für Box eine Menge vor, berechnet aus deiner Tränkekurve, dem Alter und der zuletzt getrunkenen Milch. Wie viel das Kalb bekommt, entscheidest du.</p>
       </div>
       <div class="beleg">
         <p class="notiz">0815 Lotte · 6 → 7&nbsp;L</p>
         <svg class="pfeil" aria-hidden="true"><use href="#pfeil"/></svg>
-        <figure class="app" role="img" aria-label="App-Ausschnitt Milch-Rundgang: Kalb 3 von 14, 0815 Lotte in Box 3, Empfehlung morgens 3,5 Liter, vorherige Mahlzeit 3,0 Liter getrunken.">
+        <figure class="app" role="img" aria-label="App-Ausschnitt Milch-Rundgang: Kalb 3 von 14, 0815 Lotte in Box 3, Vorschlag morgens 3,5 Liter, vorherige Mahlzeit 3,0 Liter getrunken.">
           <div class="app-leiste"><svg><use href="#logo"/></svg>Milch<span>Rundgang</span></div>
           <div class="rg-stand">
             <div><b>Kalb 3 von 14</b><div class="rg-balken"><i></i></div></div>
@@ -644,7 +647,7 @@
           </div>
           <div class="app-karte">
             <div class="rg-kopf"><div><b>0815</b> Lotte<small>23 Tage · Einzelhaltung</small></div><span class="rg-box">Box 3</span></div>
-            <div class="rg-empf"><span class="rg-wert">3,5&nbsp;L</span><small><svg class="ico"><use href="#i-sun"/></svg>Morgens · Empfehlung</small></div>
+            <div class="rg-empf"><span class="rg-wert">3,5&nbsp;L</span><small><svg class="ico"><use href="#i-sun"/></svg>Morgens · Vorschlag</small></div>
             <div class="rg-feld"><small>Gegeben (L)</small><div>3,5</div></div>
             <small class="rg-vorher">Vorherige Mahlzeit getrunken: 3,0&nbsp;L</small>
             <div class="rg-knoepfe"><span>← Zurück</span><span>Speichern &amp; Weiter →</span></div>
@@ -718,7 +721,7 @@
       <h2 id="h-ablauf">So läuft der Einstieg.</h2>
       <ol class="schritte">
         <li><div><h3>Kontakt aufnehmen</h3><p>Per Telefon, WhatsApp oder E-Mail.</p></div></li>
-        <li><div><h3>Gemeinsam einrichten</h3><p>Die App läuft auf einem kleinen Rechner auf deinem Hof oder sicher auf einem Server in Europa. Alle Daten kannst du jederzeit selbst als Sicherung herunterladen.</p></div></li>
+        <li><div><h3>Gemeinsam einrichten</h3><p>Die App läuft auf einem kleinen Rechner auf deinem Hof oder auf einem Server in Europa. Alle Daten kannst du jederzeit selbst als Sicherung herunterladen.</p></div></li>
         <li><div><h3>Im Stall loslegen</h3><p>Box für Box am Handy füttern, ohne Zettel. Gesundheit und anstehende Aufgaben jederzeit im Blick.</p></div></li>
       </ol>
     </div>
@@ -768,7 +771,7 @@
     <div class="huelle kontakt-raster">
       <div>
         <h2 id="h-kontakt">Wir stellen dir die App gern vor.</h2>
-        <p class="absender">Ein Angebot vom Hof Schumacher · Ansprechpartner<br>
+        <p class="absender">Ein Angebot von Yannick Nussbaum und Luca Schumacher<br>
           <a href="anleitung.html">Zur Bedienungsanleitung</a></p>
       </div>
       <div class="wege">
@@ -783,8 +786,8 @@
 
 <footer class="fuss">
   <div class="huelle">
-    <span>Kälber Management · ein Angebot vom Hof Schumacher</span>
-    <span>Impressum: Hof Schumacher, Hochstraße 270A, 4701 Kettenis, Belgien</span>
+    <span>Kälber Management · ein Angebot von Yannick Nussbaum und Luca Schumacher</span>
+    <span>Impressum: Yannick Nussbaum und Luca Schumacher, Hochstraße 270A, 4701 Kettenis, Belgien</span>
   </div>
 </footer>
 
@@ -870,7 +873,7 @@
     knopf.addEventListener('click', function () {
       var karte = [
         'BEGIN:VCARD', 'VERSION:3.0',
-        'FN:Kälber Management (Hof Schumacher)', 'ORG:Hof Schumacher',
+        'FN:Kälber Management (Yannick Nussbaum, Luca Schumacher)', 'ORG:Kälber Management',
         tel ? 'TEL;TYPE=CELL:' + tel.getAttribute('href').slice(4) : '',
         mail ? 'EMAIL:' + mail.getAttribute('href').slice(7).split('?')[0] : '',
         'URL:' + location.origin + '/', 'END:VCARD'
